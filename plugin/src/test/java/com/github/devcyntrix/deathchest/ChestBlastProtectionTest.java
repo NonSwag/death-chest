@@ -27,7 +27,7 @@ public class ChestBlastProtectionTest {
     private ServerMock server;
 
     private PlayerMock player;
-    private DeathChestModel model;
+    private CraftDeathChestModel model;
 
     @BeforeEach
     public void setUp() {

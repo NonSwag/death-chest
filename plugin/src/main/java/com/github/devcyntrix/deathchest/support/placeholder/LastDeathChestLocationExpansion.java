@@ -1,6 +1,6 @@
 package com.github.devcyntrix.deathchest.support.placeholder;
 
-import com.github.devcyntrix.deathchest.DeathChestModel;
+import com.github.devcyntrix.deathchest.CraftDeathChestModel;
 import com.github.devcyntrix.deathchest.DeathChestPlugin;
 import com.github.devcyntrix.deathchest.config.DeathChestConfig;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
@@ -59,7 +59,7 @@ public class LastDeathChestLocationExpansion extends PlaceholderExpansion {
         if (player == null)
             return null;
 
-        DeathChestModel deathChest = plugin.getLastChest(player);
+        CraftDeathChestModel deathChest = plugin.getLastChest(player);
         if (deathChest == null) {
             return ChatColor.translateAlternateColorCodes('&', this.fallbackMessage);
         }

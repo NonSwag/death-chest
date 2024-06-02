@@ -1,6 +1,6 @@
 package com.github.devcyntrix.deathchest.listener;
 
-import com.github.devcyntrix.deathchest.DeathChestModel;
+import com.github.devcyntrix.deathchest.CraftDeathChestModel;
 import com.github.devcyntrix.deathchest.DeathChestPlugin;
 import com.github.devcyntrix.deathchest.api.event.DeathChestSpawnEvent;
 import com.github.devcyntrix.deathchest.config.DeathChestConfig;
@@ -23,7 +23,7 @@ public class PlayerNotificationListener implements Listener {
 
         Player player = event.getPlayer();
         Audience audience = plugin.getAudiences().player(player);
-        DeathChestModel deathChest = event.getDeathChest();
+        CraftDeathChestModel deathChest = event.getDeathChest();
         PlaceholderController controller = plugin.getPlaceHolderController();
 
         // Player notification

@@ -1,6 +1,6 @@
 package com.github.devcyntrix.deathchest.support.storage;
 
-import com.github.devcyntrix.deathchest.DeathChestModel;
+import com.github.devcyntrix.deathchest.CraftDeathChestModel;
 import com.github.devcyntrix.deathchest.DeathChestPlugin;
 import com.github.devcyntrix.deathchest.api.storage.DeathChestStorage;
 import com.github.devcyntrix.deathchest.controller.PlaceholderController;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 public class YamlStorage implements DeathChestStorage {
 
     private final PlaceholderController placeHolderController;
-    private final Multimap<World, DeathChestModel> deathChestsCache = HashMultimap.create();
+    private final Multimap<World, CraftDeathChestModel> deathChestsCache = HashMultimap.create();
 
     public YamlStorage(PlaceholderController placeHolderController) {
         this.placeHolderController = placeHolderController;
@@ -99,8 +99,8 @@ public class YamlStorage implements DeathChestStorage {
                 continue;
             YamlConfiguration configuration = YamlConfiguration.loadConfiguration(worldFile);
             List<Map<String, Object>> chests = (List<Map<String, Object>>) configuration.getList("chests", Collections.emptyList());
-            Set<DeathChestModel> list = chests.stream()
-                    .map(map -> DeathChestModel.deserialize(map, plugin.getDeathChestConfig().inventoryOptions(), this.placeHolderController))
+            Set<CraftDeathChestModel> list = chests.stream()
+                    .map(map -> CraftDeathChestModel.deserialize(map, plugin.getDeathChestConfig().inventoryOptions(), this.placeHolderController))
                     .filter(Objects::nonNull)
                     .collect(Collectors.toSet());
             this.deathChestsCache.putAll(world, list);
@@ -109,29 +109,29 @@ public class YamlStorage implements DeathChestStorage {
     }
 
     @Override
-    public void put(DeathChestModel chest) {
+    public void put(CraftDeathChestModel chest) {
         this.deathChestsCache.put(chest.getWorld(), chest);
     }
 
     @Override
-    public void update(Collection<DeathChestModel> chests) {
-        for (DeathChestModel chest : chests) {
+    public void update(Collection<CraftDeathChestModel> chests) {
+        for (CraftDeathChestModel chest : chests) {
             this.deathChestsCache.put(chest.getWorld(), chest);
         }
     }
 
     @Override
-    public Set<DeathChestModel> getChests() {
+    public Set<CraftDeathChestModel> getChests() {
         return new HashSet<>(this.deathChestsCache.values());
     }
 
     @Override
-    public Set<DeathChestModel> getChests(@NotNull World world) {
+    public Set<CraftDeathChestModel> getChests(@NotNull World world) {
         return new HashSet<>(this.deathChestsCache.get(world));
     }
 
     @Override
-    public void remove(@NotNull DeathChestModel chest) {
+    public void remove(@NotNull CraftDeathChestModel chest) {
         this.deathChestsCache.remove(chest.getWorld(), chest);
     }
 
@@ -142,7 +142,7 @@ public class YamlStorage implements DeathChestStorage {
             File worldFile = getFile(world, true);
 
             List<Map<String, Object>> collect = deathChestsCache.get(world).stream()
-                    .map(DeathChestModel::serialize)
+                    .map(CraftDeathChestModel::serialize)
                     .collect((Supplier<List<Map<String, Object>>>) Lists::newArrayList, List::add, List::addAll);
             YamlConfiguration configuration = new YamlConfiguration();
             configuration.set("chests", collect);

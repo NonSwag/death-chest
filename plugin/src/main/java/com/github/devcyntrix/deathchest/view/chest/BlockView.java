@@ -1,6 +1,6 @@
 package com.github.devcyntrix.deathchest.view.chest;
 
-import com.github.devcyntrix.deathchest.DeathChestModel;
+import com.github.devcyntrix.deathchest.CraftDeathChestModel;
 import com.github.devcyntrix.deathchest.DeathChestPlugin;
 import com.github.devcyntrix.deathchest.api.ChestView;
 import org.bukkit.Location;
@@ -24,7 +24,7 @@ public class BlockView implements ChestView, Listener {
     }
 
     @Override
-    public void onCreate(DeathChestModel model) {
+    public void onCreate(CraftDeathChestModel model) {
         // Creates the chest in the next tick because if you try to sleep in the nether the explosion spawns after the player dies. That means the chest would be destroyed by the explosion.
         BukkitTask bukkitTask = new BukkitRunnable() {
             @Override
@@ -40,7 +40,7 @@ public class BlockView implements ChestView, Listener {
     }
 
     @Override
-    public void onDestroy(DeathChestModel model) {
+    public void onDestroy(CraftDeathChestModel model) {
 
         try {
             World world = model.getWorld();
@@ -63,12 +63,12 @@ public class BlockView implements ChestView, Listener {
 
 
     @Override
-    public void onLoad(DeathChestModel model) {
+    public void onLoad(CraftDeathChestModel model) {
         onCreate(model);
     }
 
     @Override
-    public void onUnload(DeathChestModel model) {
+    public void onUnload(CraftDeathChestModel model) {
         onDestroy(model);
     }
 

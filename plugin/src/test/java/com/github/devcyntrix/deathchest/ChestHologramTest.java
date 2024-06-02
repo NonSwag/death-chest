@@ -23,7 +23,7 @@ public class ChestHologramTest {
 
     private DeathChestPlugin plugin;
 
-    private DeathChestModel model;
+    private CraftDeathChestModel model;
 
     @BeforeEach
     public void setUp() {

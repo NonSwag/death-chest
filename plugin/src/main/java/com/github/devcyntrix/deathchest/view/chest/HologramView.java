@@ -1,6 +1,6 @@
 package com.github.devcyntrix.deathchest.view.chest;
 
-import com.github.devcyntrix.deathchest.DeathChestModel;
+import com.github.devcyntrix.deathchest.CraftDeathChestModel;
 import com.github.devcyntrix.deathchest.DeathChestPlugin;
 import com.github.devcyntrix.deathchest.api.ChestView;
 import com.github.devcyntrix.deathchest.config.HologramOptions;
@@ -32,7 +32,7 @@ public class HologramView implements ChestView {
     }
 
     @Override
-    public void onCreate(DeathChestModel model) {
+    public void onCreate(CraftDeathChestModel model) {
         Chunk chunk = model.getLocation().getChunk();
         boolean loaded = chunk.isLoaded();
         if (!loaded)
@@ -57,7 +57,7 @@ public class HologramView implements ChestView {
     }
 
     @Override
-    public void onDestroy(DeathChestModel model) {
+    public void onDestroy(CraftDeathChestModel model) {
         Hologram hologram = model.getHologram();
         if (hologram == null)
             return;
@@ -75,12 +75,12 @@ public class HologramView implements ChestView {
     }
 
     @Override
-    public void onLoad(DeathChestModel model) {
+    public void onLoad(CraftDeathChestModel model) {
         onCreate(model);
     }
 
     @Override
-    public void onUnload(DeathChestModel model) {
+    public void onUnload(CraftDeathChestModel model) {
         onDestroy(model);
     }
 }

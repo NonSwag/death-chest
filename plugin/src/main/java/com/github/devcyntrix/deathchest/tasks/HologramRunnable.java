@@ -1,6 +1,6 @@
 package com.github.devcyntrix.deathchest.tasks;
 
-import com.github.devcyntrix.deathchest.DeathChestModel;
+import com.github.devcyntrix.deathchest.CraftDeathChestModel;
 import com.github.devcyntrix.deathchest.controller.PlaceholderController;
 import com.github.devcyntrix.hologram.api.HologramTextLine;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import java.util.Map;
 public class HologramRunnable extends BukkitRunnable {
 
     private final Plugin plugin;
-    private final DeathChestModel chest;
+    private final CraftDeathChestModel chest;
     private final Map<HologramTextLine, String> blueprints;
     private final PlaceholderController controller;
 

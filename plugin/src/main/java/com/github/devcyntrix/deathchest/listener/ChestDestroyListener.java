@@ -1,6 +1,6 @@
 package com.github.devcyntrix.deathchest.listener;
 
-import com.github.devcyntrix.deathchest.DeathChestModel;
+import com.github.devcyntrix.deathchest.CraftDeathChestModel;
 import com.github.devcyntrix.deathchest.DeathChestPlugin;
 import com.github.devcyntrix.deathchest.api.audit.AuditAction;
 import com.github.devcyntrix.deathchest.api.audit.AuditItem;
@@ -44,7 +44,7 @@ public class ChestDestroyListener implements Listener {
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
         Inventory inventory = event.getInventory();
-        if (!(inventory.getHolder() instanceof DeathChestModel model))
+        if (!(inventory.getHolder() instanceof CraftDeathChestModel model))
             return;
 
         HumanEntity human = event.getPlayer();
@@ -85,7 +85,7 @@ public class ChestDestroyListener implements Listener {
     public void onBlockBreak(BlockBreakEvent event) {
         Block block = event.getBlock();
 
-        DeathChestModel model = this.plugin.getDeathChestController().getChest(block.getLocation());
+        CraftDeathChestModel model = this.plugin.getDeathChestController().getChest(block.getLocation());
         if (model == null)
             return;
         Player player = event.getPlayer();
@@ -121,7 +121,7 @@ public class ChestDestroyListener implements Listener {
         while (iterator.hasNext()) {
             Block next = iterator.next();
 
-            DeathChestModel model = this.plugin.getDeathChestController().getChest(next.getLocation());
+            CraftDeathChestModel model = this.plugin.getDeathChestController().getChest(next.getLocation());
             if (model == null)
                 continue;
             if (plugin.getDeathChestConfig().chestOptions().blastProtection()) {
@@ -155,7 +155,7 @@ public class ChestDestroyListener implements Listener {
         while (iterator.hasNext()) {
             Block next = iterator.next();
 
-            DeathChestModel model = this.plugin.getDeathChestController().getChest(next.getLocation());
+            CraftDeathChestModel model = this.plugin.getDeathChestController().getChest(next.getLocation());
             if (model == null)
                 continue;
             if (this.plugin.getDeathChestConfig().chestOptions().blastProtection()) {

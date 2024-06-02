@@ -22,7 +22,7 @@ public class ExpireChestTest {
 
     private ServerMock server;
 
-    private DeathChestModel model;
+    private CraftDeathChestModel model;
 
     @BeforeEach
     public void setUp() {

@@ -4,7 +4,7 @@ import cloud.commandframework.ArgumentDescription;
 import cloud.commandframework.Command;
 import cloud.commandframework.bukkit.parsers.WorldArgument;
 import cloud.commandframework.context.CommandContext;
-import com.github.devcyntrix.deathchest.DeathChestModel;
+import com.github.devcyntrix.deathchest.CraftDeathChestModel;
 import com.github.devcyntrix.deathchest.DeathChestPlugin;
 import com.github.devcyntrix.deathchest.api.audit.AuditAction;
 import com.github.devcyntrix.deathchest.api.audit.AuditItem;
@@ -47,7 +47,7 @@ public class DeleteinworldCommandProvider implements CommandProvider {
                 });
     }
 
-    private boolean deleteChest(CommandContext<CommandSender> commandContext, DeathChestModel deathChest) {
+    private boolean deleteChest(CommandContext<CommandSender> commandContext, CraftDeathChestModel deathChest) {
         plugin.getDeathChestController().destroyChest(deathChest);
 
         plugin.getAuditManager().audit(new AuditItem(new Date(), AuditAction.DESTROY_CHEST, new DestroyChestInfo(

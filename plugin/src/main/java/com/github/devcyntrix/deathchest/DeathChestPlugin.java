@@ -6,6 +6,9 @@ import com.github.devcyntrix.deathchest.api.animation.BreakAnimationService;
 import com.github.devcyntrix.deathchest.api.audit.AuditManager;
 import com.github.devcyntrix.deathchest.api.compatibility.CompatibilityLoader;
 import com.github.devcyntrix.deathchest.api.compatibility.CompatibilityManager;
+import com.github.devcyntrix.deathchest.listener.InventoryChangeSlotItemListener;
+import com.github.devcyntrix.deathchest.api.hologram.HologramService;
+import com.github.devcyntrix.deathchest.api.model.DeathChestModel;
 import com.github.devcyntrix.deathchest.api.protection.ProtectionService;
 import com.github.devcyntrix.deathchest.api.report.ReportManager;
 import com.github.devcyntrix.deathchest.api.storage.DeathChestStorage;
@@ -53,8 +56,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
-import java.util.Map;
-import java.util.WeakHashMap;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.stream.Stream;
 
@@ -337,8 +339,8 @@ public class DeathChestPlugin extends JavaPlugin implements DeathChestService {
         pluginManager.registerEvents(new LastDeathChestListener(this), this);
         pluginManager.registerEvents(new WorldListener(this), this);
         pluginManager.registerEvents(new ItemBlacklistListener(blacklist), this);
-        pluginManager.registerEvents(new InventoryChangeSlotItemListener(), this);
-        pluginManager.registerEvents(new InventoryChangeSlotItemListener(blacklist), this);
+        pluginManager.registerEvents(new InventoryChangeSlotItemListener(List.of()), this);
+        pluginManager.registerEvents(new InventoryChangeSlotItemListener(Collections.singletonList(blacklist)), this);
         pluginManager.registerEvents(new PlayerNotificationListener(this), this);
         pluginManager.registerEvents(new GlobalNotificationListener(this), this);
         pluginManager.registerEvents(new LastSafeLocationListener(this), this);
@@ -378,6 +380,16 @@ public class DeathChestPlugin extends JavaPlugin implements DeathChestService {
     @Override
     public boolean isDebugMode() {
         return deathChestConfig != null && deathChestConfig.debug() || Boolean.getBoolean("deathchest.debug");
+    }
+
+    @Override
+    public void debug(int indents, Object... message) {
+        if (!isDebugMode())
+            return;
+        Class<?> callerClass = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE).getCallerClass();
+        for (Object o : message) {
+            getLogger().info("[DEBUG] [%s] ".formatted(callerClass.getCanonicalName()) + " ".repeat(indents * 2) + o);
+        }
     }
 
     @Override
@@ -440,7 +452,7 @@ public class DeathChestPlugin extends JavaPlugin implements DeathChestService {
     }
 
     @Override
-    public @NotNull DeathChestModel createDeathChest(@NotNull Location location, ItemStack @NotNull ... items) {
+    public @NotNull CraftDeathChestModel createDeathChest(@NotNull Location location, ItemStack @NotNull ... items) {
         return createDeathChest(location, null, items);
     }
 
@@ -455,7 +467,12 @@ public class DeathChestPlugin extends JavaPlugin implements DeathChestService {
     }
 
     @Override
-    public @NotNull DeathChestModel createDeathChest(@NotNull Location location, long createdAt, long expireAt, @Nullable Player player, boolean isProtected, ItemStack @NotNull ... items) {
+    public @NotNull DeathChestModel createDeathChest(@NotNull Location location, long createdAt, long expireAt, @Nullable Player player, ItemStack @NotNull ... items) {
+        return createDeathChest(location, createdAt, expireAt, player, false, items);
+    }
+
+    @Override
+    public @NotNull CraftDeathChestModel createDeathChest(@NotNull Location location, long createdAt, long expireAt, @Nullable Player player, boolean isProtected, ItemStack @NotNull ... items) {
         return this.deathChestController.createChest(location, createdAt, expireAt, player, isProtected, items);
     }
 

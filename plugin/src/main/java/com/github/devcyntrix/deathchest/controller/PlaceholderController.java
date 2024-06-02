@@ -1,6 +1,6 @@
 package com.github.devcyntrix.deathchest.controller;
 
-import com.github.devcyntrix.deathchest.DeathChestModel;
+import com.github.devcyntrix.deathchest.CraftDeathChestModel;
 import com.github.devcyntrix.deathchest.DeathChestPlugin;
 import com.github.devcyntrix.deathchest.config.DeathChestConfig;
 import com.github.devcyntrix.deathchest.util.ChestModelStringLookup;
@@ -26,7 +26,7 @@ public class PlaceholderController {
         };
     }
 
-    public String replace(DeathChestModel model, String base) {
+    public String replace(CraftDeathChestModel model, String base) {
         StringSubstitutor substitutor = new StringSubstitutor(new ChestModelStringLookup(config, model, duration));
         base = substitutor.replace(base);
         if (DeathChestPlugin.isPlaceholderAPIEnabled()) base = PlaceholderAPI.setPlaceholders(model.getOwner(), base);

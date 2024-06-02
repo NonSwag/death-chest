@@ -1,6 +1,6 @@
 package com.github.devcyntrix.deathchest.config;
 
-import com.github.devcyntrix.deathchest.DeathChestModel;
+import com.github.devcyntrix.deathchest.CraftDeathChestModel;
 import com.github.devcyntrix.deathchest.controller.PlaceholderController;
 import com.google.gson.annotations.SerializedName;
 import net.kyori.adventure.audience.Audience;
@@ -35,7 +35,7 @@ public record PlayerNotificationOptions(
         return new PlayerNotificationOptions(enabled, coloredMessage);
     }
 
-    public void showNotification(Audience audience, DeathChestModel model, PlaceholderController controller) {
+    public void showNotification(Audience audience, CraftDeathChestModel model, PlaceholderController controller) {
         for (String message : message()) {
             message = controller.replace(model, message);
 

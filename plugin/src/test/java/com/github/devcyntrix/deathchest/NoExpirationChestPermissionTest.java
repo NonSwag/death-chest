@@ -50,7 +50,7 @@ public class NoExpirationChestPermissionTest {
         MockBukkit.unmock();
     }
 
-    private DeathChestModel createChest(Player player) {
+    private CraftDeathChestModel createChest(Player player) {
         DeathChestConfig config = plugin.getDeathChestConfig();
         Duration expiration = config.chestOptions().expiration();
         if (expiration == null)
@@ -62,7 +62,7 @@ public class NoExpirationChestPermissionTest {
         long createdAt = System.currentTimeMillis();
         long expireAt = !expiration.isNegative() && !expiration.isZero() && expires ? createdAt + expiration.toMillis() : -1;
 
-        DeathChestModel model = plugin.createDeathChest(player.getLocation(), createdAt, expireAt, player, content.toArray(ItemStack[]::new));
+        CraftDeathChestModel model = plugin.createDeathChest(player.getLocation(), createdAt, expireAt, player, content.toArray(ItemStack[]::new));
         server.getScheduler().performOneTick();
 
         Assertions.assertFalse(model.getLocation().getBlock().isEmpty());
@@ -74,7 +74,7 @@ public class NoExpirationChestPermissionTest {
     public void noExpirationPermissionSuccess() {
         this.player.addAttachment(plugin, plugin.getDeathChestConfig().chestOptions().noExpirationPermission().permission(), true);
 
-        DeathChestModel model = createChest(this.player);
+        CraftDeathChestModel model = createChest(this.player);
 
         long remainingSeconds = (model.getExpireAt() - model.getCreatedAt()) / 1000;
         System.out.printf("Skipping %d seconds%n", remainingSeconds);
@@ -85,7 +85,7 @@ public class NoExpirationChestPermissionTest {
     @Test
     @DisplayName("Has no permission and expires")
     public void noExpirationPermissionFail() {
-        DeathChestModel model = createChest(player);
+        CraftDeathChestModel model = createChest(player);
 
         long remainingSeconds = (model.getExpireAt() - model.getCreatedAt()) / 1000;
         System.out.printf("Skipping %d seconds%n", remainingSeconds);

@@ -60,7 +60,7 @@ public class ThiefProtectionTest {
         MockBukkit.unmock();
     }
 
-    private DeathChestModel createChest(Player player) {
+    private CraftDeathChestModel createChest(Player player) {
 
         Location loc = player.getLocation().clone();
 
@@ -69,7 +69,7 @@ public class ThiefProtectionTest {
 
         System.out.println(plugin.getChests().collect(Collectors.toList()));
 
-        Optional<@NotNull DeathChestModel> first = plugin.getChests(loc.getWorld()).findFirst();
+        Optional<@NotNull CraftDeathChestModel> first = plugin.getChests(loc.getWorld()).findFirst();
         Assertions.assertFalse(first.isEmpty()); // There have to be a chest
 
         return first.get();
@@ -83,7 +83,7 @@ public class ThiefProtectionTest {
 
         content.forEach(itemStack -> diedPlayer.getInventory().addItem(itemStack));
 
-        DeathChestModel model = createChest(diedPlayer);
+        CraftDeathChestModel model = createChest(diedPlayer);
         Assertions.assertFalse(model.isProtected());
         Block block = model.getLocation().getBlock();
 
@@ -101,7 +101,7 @@ public class ThiefProtectionTest {
         content.forEach(itemStack -> diedPlayer.getInventory().addItem(itemStack));
         PlayerMock thief = server.addPlayer();
 
-        DeathChestModel model = createChest(diedPlayer);
+        CraftDeathChestModel model = createChest(diedPlayer);
         Assertions.assertFalse(model.isProtected());
         Block block = model.getLocation().getBlock();
         Assertions.assertFalse(block.isEmpty());
@@ -125,7 +125,7 @@ public class ThiefProtectionTest {
         diedPlayer.addAttachment(plugin, plugin.getDeathChestConfig().chestOptions().thiefProtectionOptions().permission(), true);
         PlayerMock thief = server.addPlayer();
 
-        DeathChestModel chest = createChest(diedPlayer);
+        CraftDeathChestModel chest = createChest(diedPlayer);
         Assertions.assertTrue(chest.isProtected());
         Block block = chest.getLocation().getBlock();
 
@@ -143,7 +143,7 @@ public class ThiefProtectionTest {
         diedPlayer.addAttachment(plugin, plugin.getDeathChestConfig().chestOptions().thiefProtectionOptions().permission(), true);
         PlayerMock thief = server.addPlayer();
 
-        DeathChestModel model = createChest(diedPlayer);
+        CraftDeathChestModel model = createChest(diedPlayer);
         Assertions.assertTrue(model.isProtected());
         Block block = model.getLocation().getBlock();
         Assertions.assertFalse(block.isEmpty());
@@ -169,7 +169,7 @@ public class ThiefProtectionTest {
         PlayerMock thief = server.addPlayer();
         thief.addAttachment(plugin, plugin.getDeathChestConfig().chestOptions().thiefProtectionOptions().bypassPermission(), true);
 
-        DeathChestModel model = createChest(diedPlayer);
+        CraftDeathChestModel model = createChest(diedPlayer);
         Assertions.assertTrue(model.isProtected());
         Block block = model.getLocation().getBlock();
 
@@ -190,7 +190,7 @@ public class ThiefProtectionTest {
         PlayerMock thief = server.addPlayer();
         thief.addAttachment(plugin, plugin.getDeathChestConfig().chestOptions().thiefProtectionOptions().bypassPermission(), true);
 
-        DeathChestModel model = createChest(diedPlayer);
+        CraftDeathChestModel model = createChest(diedPlayer);
         Assertions.assertTrue(model.isProtected());
         Block block = model.getLocation().getBlock();
         Assertions.assertFalse(block.isEmpty());

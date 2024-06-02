@@ -1,6 +1,6 @@
 package com.github.devcyntrix.deathchest.tasks;
 
-import com.github.devcyntrix.deathchest.DeathChestModel;
+import com.github.devcyntrix.deathchest.CraftDeathChestModel;
 import com.github.devcyntrix.deathchest.api.animation.BreakAnimationService;
 import com.github.devcyntrix.deathchest.config.BreakAnimationOptions;
 import org.bukkit.Bukkit;
@@ -17,11 +17,11 @@ import java.util.stream.Stream;
 public class BreakAnimationRunnable extends BukkitRunnable {
 
     private final Plugin plugin;
-    private final DeathChestModel chest;
+    private final CraftDeathChestModel chest;
     private final BreakAnimationService breakAnimationService;
     private final BreakAnimationOptions options;
 
-    public BreakAnimationRunnable(Plugin plugin, DeathChestModel chest, BreakAnimationService breakAnimationService, BreakAnimationOptions options) {
+    public BreakAnimationRunnable(Plugin plugin, CraftDeathChestModel chest, BreakAnimationService breakAnimationService, BreakAnimationOptions options) {
         this.plugin = plugin;
         this.chest = chest;
         this.breakAnimationService = breakAnimationService;

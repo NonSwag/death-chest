@@ -1,6 +1,6 @@
 package com.github.devcyntrix.deathchest.view.chest;
 
-import com.github.devcyntrix.deathchest.DeathChestModel;
+import com.github.devcyntrix.deathchest.CraftDeathChestModel;
 import com.github.devcyntrix.deathchest.DeathChestPlugin;
 import com.github.devcyntrix.deathchest.api.ChestView;
 import com.github.devcyntrix.deathchest.tasks.ExpirationRunnable;
@@ -15,7 +15,7 @@ public class ExpirationView implements ChestView {
     }
 
     @Override
-    public void onCreate(DeathChestModel model) {
+    public void onCreate(CraftDeathChestModel model) {
         if (!model.isExpiring())
             return;
         long untilDeletion = Math.max(0, model.getExpireAt() - System.currentTimeMillis());
@@ -26,17 +26,17 @@ public class ExpirationView implements ChestView {
     }
 
     @Override
-    public void onDestroy(DeathChestModel model) {
+    public void onDestroy(CraftDeathChestModel model) {
 
     }
 
     @Override
-    public void onLoad(DeathChestModel model) {
+    public void onLoad(CraftDeathChestModel model) {
         onCreate(model);
     }
 
     @Override
-    public void onUnload(DeathChestModel model) {
+    public void onUnload(CraftDeathChestModel model) {
 
     }
 }

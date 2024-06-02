@@ -1,6 +1,6 @@
 package com.github.devcyntrix.deathchest.listener;
 
-import com.github.devcyntrix.deathchest.DeathChestModel;
+import com.github.devcyntrix.deathchest.CraftDeathChestModel;
 import com.github.devcyntrix.deathchest.DeathChestPlugin;
 import com.github.devcyntrix.deathchest.config.ThiefProtectionOptions;
 import com.github.devcyntrix.deathchest.controller.DeathChestController;
@@ -41,7 +41,7 @@ public class ChestInteractionListener implements Listener {
             return;
 
         DeathChestController controller = plugin.getDeathChestController();
-        DeathChestModel model = controller.getChest(block.getLocation());
+        CraftDeathChestModel model = controller.getChest(block.getLocation());
         if (model == null)
             return;
 

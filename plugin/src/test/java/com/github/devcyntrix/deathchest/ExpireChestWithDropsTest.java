@@ -27,7 +27,7 @@ public class ExpireChestWithDropsTest {
 
     private List<ItemStack> content;
     private PlayerMock player;
-    private DeathChestModel model;
+    private CraftDeathChestModel model;
 
     @BeforeEach
     public void setUp() {

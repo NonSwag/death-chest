@@ -1,6 +1,6 @@
 package com.github.devcyntrix.deathchest.controller;
 
-import com.github.devcyntrix.deathchest.DeathChestModel;
+import com.github.devcyntrix.deathchest.CraftDeathChestModel;
 import com.github.devcyntrix.deathchest.DeathChestPlugin;
 import com.github.devcyntrix.deathchest.api.ChestView;
 import com.github.devcyntrix.deathchest.api.audit.AuditAction;
@@ -8,6 +8,7 @@ import com.github.devcyntrix.deathchest.api.audit.AuditItem;
 import com.github.devcyntrix.deathchest.api.audit.AuditManager;
 import com.github.devcyntrix.deathchest.api.audit.info.CreateChestInfo;
 import com.github.devcyntrix.deathchest.api.event.DeathChestDestroyEvent;
+import com.github.devcyntrix.deathchest.api.model.DeathChestModel;
 import com.github.devcyntrix.deathchest.api.storage.DeathChestStorage;
 import com.github.devcyntrix.deathchest.config.DeathChestConfig;
 import com.github.devcyntrix.deathchest.config.InventoryOptions;
@@ -85,13 +86,13 @@ public class DeathChestController implements Closeable {
         logger.info("  Of these %d have expired".formatted(this.loadedChests.row(world).values().stream().filter(model1 -> model1.getExpireAt() < time).count()));
     }
 
-    public @NotNull DeathChestModel createChest(@NotNull Location location, long expireAt, @Nullable Player player, ItemStack @NotNull ... items) {
+    public @NotNull CraftDeathChestModel createChest(@NotNull Location location, long expireAt, @Nullable Player player, ItemStack @NotNull ... items) {
         boolean protectedChest = player != null && player.hasPermission(getConfig().chestOptions().thiefProtectionOptions().permission());
         return createChest(location, System.currentTimeMillis(), expireAt, player, protectedChest, items);
     }
 
-    public @NotNull DeathChestModel createChest(@NotNull Location location, long createdAt, long expireAt, @Nullable Player player, boolean isProtected, ItemStack @NotNull ... items) {
-        DeathChestModel model = new DeathChestModel(location, createdAt, expireAt, player, isProtected);
+    public @NotNull CraftDeathChestModel createChest(@NotNull Location location, long createdAt, long expireAt, @Nullable Player player, boolean isProtected, ItemStack @NotNull ... items) {
+        CraftDeathChestModel model = new CraftDeathChestModel(location, createdAt, expireAt, player, isProtected);
         StringSubstitutor substitution = new StringSubstitutor(new ChestModelStringLookup(plugin.getDeathChestConfig(), model, durationFormat));
 
         // Creates inventory

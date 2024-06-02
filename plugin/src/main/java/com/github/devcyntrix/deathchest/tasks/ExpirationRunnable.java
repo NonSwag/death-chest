@@ -1,12 +1,13 @@
 package com.github.devcyntrix.deathchest.tasks;
 
-import com.github.devcyntrix.deathchest.DeathChestModel;
+import com.github.devcyntrix.deathchest.CraftDeathChestModel;
 import com.github.devcyntrix.deathchest.DeathChestPlugin;
 import com.github.devcyntrix.deathchest.api.audit.AuditAction;
 import com.github.devcyntrix.deathchest.api.audit.AuditItem;
 import com.github.devcyntrix.deathchest.api.audit.AuditManager;
 import com.github.devcyntrix.deathchest.api.audit.info.DestroyChestInfo;
 import com.github.devcyntrix.deathchest.api.audit.info.DestroyReason;
+import com.github.devcyntrix.deathchest.api.model.DeathChestModel;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Date;

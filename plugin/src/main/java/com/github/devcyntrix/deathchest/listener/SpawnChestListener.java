@@ -1,6 +1,6 @@
 package com.github.devcyntrix.deathchest.listener;
 
-import com.github.devcyntrix.deathchest.DeathChestModel;
+import com.github.devcyntrix.deathchest.CraftDeathChestModel;
 import com.github.devcyntrix.deathchest.DeathChestPlugin;
 import com.github.devcyntrix.deathchest.api.event.DeathChestSpawnEvent;
 import com.github.devcyntrix.deathchest.api.event.PreDeathChestSpawnEvent;
@@ -216,7 +216,7 @@ public class SpawnChestListener implements Listener {
             expireAt = preSpawn.getExpireAt();
             items = preSpawn.getItems();
 
-            DeathChestModel deathChest = plugin.createDeathChest(lastSafePos, createdAt, expireAt, player, protectedChest, items);
+            CraftDeathChestModel deathChest = plugin.createDeathChest(lastSafePos, createdAt, expireAt, player, protectedChest, items);
 
             DeathChestSpawnEvent deathChestSpawnEvent = new DeathChestSpawnEvent(player, deathChest);
             Bukkit.getPluginManager().callEvent(deathChestSpawnEvent);

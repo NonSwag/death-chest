@@ -1,6 +1,6 @@
 package com.github.devcyntrix.deathchest.config;
 
-import com.github.devcyntrix.deathchest.DeathChestModel;
+import com.github.devcyntrix.deathchest.CraftDeathChestModel;
 import com.github.devcyntrix.deathchest.DeathChestPlugin;
 import com.github.devcyntrix.deathchest.controller.PlaceholderController;
 import com.google.gson.annotations.SerializedName;
@@ -34,7 +34,7 @@ public record GlobalNotificationOptions(
         return new GlobalNotificationOptions(enabled, coloredMessage);
     }
 
-    public void showNotification(DeathChestModel model, PlaceholderController controller) {
+    public void showNotification(CraftDeathChestModel model, PlaceholderController controller) {
 
         for (String message : message()) {
             message = controller.replace(model, message);

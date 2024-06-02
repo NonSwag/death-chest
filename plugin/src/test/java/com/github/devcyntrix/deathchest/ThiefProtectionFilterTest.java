@@ -51,7 +51,7 @@ public class ThiefProtectionFilterTest {
         MockBukkit.unmock();
     }
 
-    private DeathChestModel createChest(PlayerMock player) {
+    private CraftDeathChestModel createChest(PlayerMock player) {
 
         World world = player.getWorld();
         Location location = player.getLocation();
@@ -88,10 +88,10 @@ public class ThiefProtectionFilterTest {
         player.setHealth(0.0);
         server.getScheduler().performOneTick();
 
-        Optional<@NotNull DeathChestModel> first = plugin.getChests(location.getWorld()).filter(deathChestModel -> deathChestModel.getLocation().equals(location)).findFirst();
+        Optional<@NotNull CraftDeathChestModel> first = plugin.getChests(location.getWorld()).filter(deathChestModel -> deathChestModel.getLocation().equals(location)).findFirst();
         Assertions.assertFalse(first.isEmpty()); // There have to be a chest
 
-        DeathChestModel model = first.get();
+        CraftDeathChestModel model = first.get();
         Assertions.assertNotNull(model);
         Assertions.assertTrue(model.isProtected());
     }
@@ -106,10 +106,10 @@ public class ThiefProtectionFilterTest {
         player.setHealth(0.0);
         server.getScheduler().performOneTick();
 
-        Optional<@NotNull DeathChestModel> first = plugin.getChests(location.getWorld()).filter(deathChestModel -> deathChestModel.getLocation().equals(location)).findFirst();
+        Optional<@NotNull CraftDeathChestModel> first = plugin.getChests(location.getWorld()).filter(deathChestModel -> deathChestModel.getLocation().equals(location)).findFirst();
         Assertions.assertFalse(first.isEmpty()); // There have to be a chest
 
-        DeathChestModel model = first.get();
+        CraftDeathChestModel model = first.get();
         Assertions.assertNotNull(model);
         Assertions.assertFalse(model.isProtected());
     }
@@ -130,10 +130,10 @@ public class ThiefProtectionFilterTest {
         player.setHealth(0.0);
         server.getScheduler().performOneTick();
 
-        Optional<@NotNull DeathChestModel> first = plugin.getChests(location.getWorld()).filter(deathChestModel -> deathChestModel.getLocation().equals(location)).findFirst();
+        Optional<@NotNull CraftDeathChestModel> first = plugin.getChests(location.getWorld()).filter(deathChestModel -> deathChestModel.getLocation().equals(location)).findFirst();
         Assertions.assertFalse(first.isEmpty()); // There have to be a chest
 
-        DeathChestModel model = first.get();
+        CraftDeathChestModel model = first.get();
         Assertions.assertNotNull(model);
         Assertions.assertFalse(model.isProtected());
     }
@@ -153,10 +153,10 @@ public class ThiefProtectionFilterTest {
         player.setHealth(0.0);
         server.getScheduler().performOneTick();
 
-        Optional<@NotNull DeathChestModel> first = plugin.getChests(location.getWorld()).filter(deathChestModel -> deathChestModel.getLocation().equals(location)).findFirst();
+        Optional<@NotNull CraftDeathChestModel> first = plugin.getChests(location.getWorld()).filter(deathChestModel -> deathChestModel.getLocation().equals(location)).findFirst();
         Assertions.assertFalse(first.isEmpty()); // There have to be a chest
 
-        DeathChestModel model = first.get();
+        CraftDeathChestModel model = first.get();
         Assertions.assertNotNull(model);
         Assertions.assertFalse(model.isProtected());
     }

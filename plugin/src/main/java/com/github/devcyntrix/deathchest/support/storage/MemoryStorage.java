@@ -1,6 +1,6 @@
 package com.github.devcyntrix.deathchest.support.storage;
 
-import com.github.devcyntrix.deathchest.DeathChestModel;
+import com.github.devcyntrix.deathchest.CraftDeathChestModel;
 import com.github.devcyntrix.deathchest.DeathChestPlugin;
 import com.github.devcyntrix.deathchest.api.storage.DeathChestStorage;
 import com.google.common.collect.HashMultimap;
@@ -17,7 +17,7 @@ import java.util.Set;
 
 public class MemoryStorage implements DeathChestStorage {
 
-    private final Multimap<World, DeathChestModel> deathChestsCache = HashMultimap.create();
+    private final Multimap<World, CraftDeathChestModel> deathChestsCache = HashMultimap.create();
 
     @Override
     public ConfigurationSection getDefaultOptions() {
@@ -31,29 +31,29 @@ public class MemoryStorage implements DeathChestStorage {
 
 
     @Override
-    public void put(DeathChestModel chest) {
+    public void put(CraftDeathChestModel chest) {
         this.deathChestsCache.put(chest.getWorld(), chest);
     }
 
     @Override
-    public void update(Collection<DeathChestModel> chests) {
-        for (DeathChestModel chest : chests) {
+    public void update(Collection<CraftDeathChestModel> chests) {
+        for (CraftDeathChestModel chest : chests) {
             this.deathChestsCache.put(chest.getWorld(), chest);
         }
     }
 
     @Override
-    public Set<DeathChestModel> getChests() {
+    public Set<CraftDeathChestModel> getChests() {
         return new HashSet<>(this.deathChestsCache.values());
     }
 
     @Override
-    public Set<DeathChestModel> getChests(@NotNull World world) {
+    public Set<CraftDeathChestModel> getChests(@NotNull World world) {
         return new HashSet<>(this.deathChestsCache.get(world));
     }
 
     @Override
-    public void remove(@NotNull DeathChestModel chest) {
+    public void remove(@NotNull CraftDeathChestModel chest) {
         this.deathChestsCache.remove(chest.getWorld(), chest);
     }
 

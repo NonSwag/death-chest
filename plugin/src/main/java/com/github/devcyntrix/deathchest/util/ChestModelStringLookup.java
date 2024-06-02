@@ -1,9 +1,7 @@
 package com.github.devcyntrix.deathchest.util;
 
-import com.github.devcyntrix.deathchest.DeathChestModel;
-import com.github.devcyntrix.deathchest.DeathChestPlugin;
+import com.github.devcyntrix.deathchest.CraftDeathChestModel;
 import com.github.devcyntrix.deathchest.config.DeathChestConfig;
-import com.github.devcyntrix.deathchest.config.WorldAliasConfig;
 import org.apache.commons.text.lookup.StringLookup;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -16,11 +14,11 @@ public class ChestModelStringLookup implements StringLookup {
 
     private final DeathChestConfig config;
     @NotNull
-    private final DeathChestModel model;
+    private final CraftDeathChestModel model;
     @NotNull
     private final Function<Long, String> duration;
 
-    public ChestModelStringLookup(@NotNull DeathChestConfig config, @NotNull DeathChestModel model, @NotNull Function<Long, String> duration) {
+    public ChestModelStringLookup(@NotNull DeathChestConfig config, @NotNull CraftDeathChestModel model, @NotNull Function<Long, String> duration) {
         this.config = config;
         this.model = model;
         this.duration = duration;

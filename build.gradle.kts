@@ -58,10 +58,10 @@ dependencies {
     compileOnly("com.griefcraft:lwc:2.3.2-dev")
 
     compileOnly("org.apache.commons:commons-text:1.10.0")
-    compileOnly("org.jetbrains:annotations:23.0.0")
+    compileOnly("org.jetbrains:annotations:24.1.0")
 
-    compileOnly("org.projectlombok:lombok:1.18.24")
-    annotationProcessor("org.projectlombok:lombok:1.18.24")
+    compileOnly("org.projectlombok:lombok:1.18.32")
+    annotationProcessor("org.projectlombok:lombok:1.18.32")
 
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")
@@ -78,8 +78,8 @@ dependencies {
     testImplementation("org.bstats:bstats-bukkit:3.0.2")
     testImplementation("ch.qos.logback:logback-classic:1.4.14")
 
-    testCompileOnly("org.projectlombok:lombok:1.18.24")
-    testAnnotationProcessor("org.projectlombok:lombok:1.18.24")
+    testCompileOnly("org.projectlombok:lombok:1.18.32")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.32")
 }
 
 java {

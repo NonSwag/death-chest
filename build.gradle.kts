@@ -1,14 +1,14 @@
 import io.papermc.hangarpublishplugin.model.Platforms
 
 plugins {
-    `java-library`
+    id("java-library")
     id("xyz.jpenilla.run-paper") version "2.3.0"
     id("io.github.goooler.shadow") version "8.1.7"
     id("io.papermc.hangar-publish-plugin") version "0.1.2"
 }
 
 group = "com.github.devcyntrix"
-version = "2.2.4"
+version = "3.0.0"
 
 repositories {
     mavenCentral()

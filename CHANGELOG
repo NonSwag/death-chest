@@ -1,5 +1,6 @@
 3.0.0:
 * Updated java version to 21
+* Added 1.20.6 support
 
 2.2.3:
 * Fix the bug that the player cannot open the chest after rejoining (If chest protection is enabled)

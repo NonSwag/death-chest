@@ -1,3 +1,5 @@
 rootProject.name = "death-chest"
 include("api")
-include("plugin")
+include("core")
+include("paper")
+include("spigot")

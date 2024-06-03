@@ -1,14 +1,10 @@
 package com.github.devcyntrix.deathchest.api.report;
 
-import com.github.devcyntrix.deathchest.DeathChestPlugin;
-import com.github.devcyntrix.deathchest.config.DeathChestConfig;
-import com.google.gson.annotations.SerializedName;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
+import com.github.devcyntrix.deathchest.api.model.DeathChestConfig;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Date;
+import java.util.Map;
+import java.util.Set;
 
 public interface Report {
     Date date();

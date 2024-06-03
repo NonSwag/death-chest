@@ -14,10 +14,6 @@ import java.util.TreeSet;
 public interface ReportManager {
     int DATE_FORMAT_CONFIG = DateFormat.DEFAULT;
 
-    default void createReport() {
-        addReport(Report.create());
-    }
-
     void addReport(@NotNull Report report);
 
     @Nullable Report getLatestReport();

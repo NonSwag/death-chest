@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Closeable;
+import java.util.Map;
 import java.util.Set;
 
 public interface DeathChestModel extends InventoryHolder {
@@ -19,9 +20,6 @@ public interface DeathChestModel extends InventoryHolder {
 
     @Nullable
     Hologram getHologram();
-
-    @Nullable
-    Integer getBreakingEntityId();
 
     @NotNull
     Location getLocation();
@@ -39,11 +37,11 @@ public interface DeathChestModel extends InventoryHolder {
 
     boolean isProtected();
 
+    boolean isExpiring();
+
     long getCreatedAt();
 
     long getExpireAt();
-
-    void setBreakingEntityId(@Nullable Integer breakingEntityId);
 
     void setCreatedAt(long createdAt);
 
@@ -68,4 +66,6 @@ public interface DeathChestModel extends InventoryHolder {
     void dropItems(@NotNull Location location);
 
     void cancelTasks();
+
+    Map<String, Object> serialize();
 }

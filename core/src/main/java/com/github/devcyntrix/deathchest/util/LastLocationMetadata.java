@@ -17,7 +17,7 @@ public class LastLocationMetadata extends MetadataValueAdapter {
      * Initializes a FixedMetadataValue with an Object
      *
      * @param owningPlugin the {@link Plugin} that created this metadata value
-     * @param value        the value assigned to this metadata value
+     * @param location     the value assigned to this metadata value
      */
     public LastLocationMetadata(@NotNull Plugin owningPlugin, @NotNull Location location) {
         super(owningPlugin);

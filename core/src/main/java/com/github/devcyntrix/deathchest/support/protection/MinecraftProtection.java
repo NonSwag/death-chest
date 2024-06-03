@@ -13,7 +13,7 @@ public class MinecraftProtection implements ProtectionService {
     @Override
     public boolean canBuild(@NotNull Player player, @NotNull Location location, @NotNull Material material) {
 
-        World world = Bukkit.getWorlds().get(0); // Each server has at least one world - the overworld
+        World world = Bukkit.getWorlds().getFirst(); // Each server has at least one world - the overworld
         if (!world.equals(location.getWorld()))
             return true;
 

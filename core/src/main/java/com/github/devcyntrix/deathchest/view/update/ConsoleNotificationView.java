@@ -1,19 +1,15 @@
 package com.github.devcyntrix.deathchest.view.update;
 
+import lombok.RequiredArgsConstructor;
 import org.bukkit.plugin.Plugin;
 
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
+@RequiredArgsConstructor
 public class ConsoleNotificationView implements Consumer<String> {
-
     private final Plugin plugin;
     private final Logger logger;
-
-    public ConsoleNotificationView(Plugin plugin, Logger logger) {
-        this.plugin = plugin;
-        this.logger = logger;
-    }
 
     @Override
     public void accept(String version) {

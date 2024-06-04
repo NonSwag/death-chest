@@ -22,7 +22,6 @@ import java.util.logging.Level;
 @Getter
 @Singleton
 public class UpdateController implements Closeable {
-
     private String newestVersion;
     private final BukkitTask updateScheduler;
 

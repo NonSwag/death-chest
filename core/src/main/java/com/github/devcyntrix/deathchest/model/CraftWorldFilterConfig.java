@@ -1,4 +1,4 @@
-package com.github.devcyntrix.deathchest.config;
+package com.github.devcyntrix.deathchest.model;
 
 import com.github.devcyntrix.deathchest.api.model.FilterType;
 import com.github.devcyntrix.deathchest.api.model.WorldFilterConfig;

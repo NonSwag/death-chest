@@ -5,7 +5,7 @@ import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.WorldMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import com.github.devcyntrix.deathchest.api.model.DeathChestConfig;
-import com.github.devcyntrix.deathchest.config.CraftDeathChestConfig;
+import com.github.devcyntrix.deathchest.model.CraftDeathChestConfig;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -42,7 +42,7 @@ public class WorldFilterTest {
 
         this.server = MockBukkit.getOrCreateMock();
         this.server.setSpawnRadius(0);
-        MockBukkit.load(DeathChestPlugin.class, true, config);
+        MockBukkit.load(DeathChestCorePlugin.class, true, config);
         List<ItemStack> content = new ArrayList<>(List.of(new ItemStack(Material.OAK_LOG)));
 
         this.player = server.addPlayer();

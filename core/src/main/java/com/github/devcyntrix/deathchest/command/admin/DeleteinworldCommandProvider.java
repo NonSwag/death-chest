@@ -4,7 +4,7 @@ import cloud.commandframework.ArgumentDescription;
 import cloud.commandframework.Command;
 import cloud.commandframework.bukkit.parsers.WorldArgument;
 import cloud.commandframework.context.CommandContext;
-import com.github.devcyntrix.deathchest.DeathChestPlugin;
+import com.github.devcyntrix.deathchest.DeathChestCorePlugin;
 import com.github.devcyntrix.deathchest.api.audit.AuditAction;
 import com.github.devcyntrix.deathchest.api.audit.info.DestroyReason;
 import com.github.devcyntrix.deathchest.api.model.DeathChestModel;
@@ -21,7 +21,7 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 public class DeleteinworldCommandProvider implements CommandProvider {
-    private final DeathChestPlugin plugin;
+    private final DeathChestCorePlugin plugin;
 
     @Override
     public Command.Builder<CommandSender> provide(Command.Builder<CommandSender> builder) {

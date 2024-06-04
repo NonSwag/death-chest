@@ -9,7 +9,7 @@ import cloud.commandframework.captions.CaptionVariable;
 import cloud.commandframework.context.CommandContext;
 import cloud.commandframework.exceptions.parsing.NoInputProvidedException;
 import cloud.commandframework.exceptions.parsing.ParserException;
-import com.github.devcyntrix.deathchest.DeathChestPlugin;
+import com.github.devcyntrix.deathchest.DeathChestCorePlugin;
 import com.google.gson.internal.bind.util.ISO8601Utils;
 import org.bukkit.util.StringUtil;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -25,7 +25,7 @@ import java.util.function.BiFunction;
 
 public class DateArgument<C> extends CommandArgument<C, Date> {
     protected DateArgument(
-            DeathChestPlugin deathChestPlugin,
+            DeathChestCorePlugin deathChestPlugin,
             boolean required,
             @NonNull String name,
             @NonNull String defaultValue,
@@ -36,14 +36,14 @@ public class DateArgument<C> extends CommandArgument<C, Date> {
     }
 
     public static <C> CommandArgument.@NonNull Builder<C, Date> newBuilder(
-            DeathChestPlugin deathChestPlugin,
+            DeathChestCorePlugin deathChestPlugin,
             final @NonNull String name
     ) {
         return new DateArgument.Builder<>(deathChestPlugin, name);
     }
 
     public static <C> @NonNull CommandArgument<C, Date> of(
-            DeathChestPlugin deathChestPlugin,
+            DeathChestCorePlugin deathChestPlugin,
             final @NonNull String name
     ) {
         return DateArgument.<C>newBuilder(deathChestPlugin, name).asRequired().build();
@@ -51,9 +51,9 @@ public class DateArgument<C> extends CommandArgument<C, Date> {
 
     public static final class Builder<C> extends CommandArgument.Builder<C, Date> {
 
-        private final DeathChestPlugin deathChestPlugin;
+        private final DeathChestCorePlugin deathChestPlugin;
 
-        private Builder(DeathChestPlugin deathChestPlugin, final @NonNull String name) {
+        private Builder(DeathChestCorePlugin deathChestPlugin, final @NonNull String name) {
             super(Date.class, name);
             this.deathChestPlugin = deathChestPlugin;
         }
@@ -73,9 +73,9 @@ public class DateArgument<C> extends CommandArgument<C, Date> {
 
     public static final class DateParser<C> implements ArgumentParser<C, Date> {
 
-        private final DeathChestPlugin deathChestPlugin;
+        private final DeathChestCorePlugin deathChestPlugin;
 
-        DateParser(DeathChestPlugin deathChestPlugin) {
+        DateParser(DeathChestCorePlugin deathChestPlugin) {
             this.deathChestPlugin = deathChestPlugin;
         }
 

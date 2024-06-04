@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Path;
+import java.net.URI;
 import java.util.Scanner;
 import java.util.logging.Level;
 
@@ -20,7 +20,7 @@ public class HangarUpdateChecker implements UpdateChecker {
     @Nullable
     public String getLatestRelease() {
         PluginDescriptionFile description = plugin.getDescription();
-        try (InputStream inputStream = Path.of("https://hangar.papermc.io/api/v1/projects/%s/latestrelease".formatted(description.getName())).toUri().toURL().openStream(); Scanner scanner = new Scanner(inputStream)) {
+        try (InputStream inputStream = URI.create("https://hangar.papermc.io/api/v1/projects/%s/latestrelease".formatted(description.getName())).toURL().openStream(); Scanner scanner = new Scanner(inputStream)) {
             if (!scanner.hasNext())
                 return null;
             return scanner.next();
@@ -36,7 +36,7 @@ public class HangarUpdateChecker implements UpdateChecker {
         Preconditions.checkNotNull(version, "version");
         PluginDescriptionFile description = plugin.getDescription();
         try {
-            return Path.of("https://hangar.papermc.io/api/v1/projects/%s/versions/%s/PAPER/download".formatted(description.getName(), version)).toUri().toURL().openStream();
+            return URI.create("https://hangar.papermc.io/api/v1/projects/%s/versions/%s/PAPER/download".formatted(description.getName(), version)).toURL().openStream();
         } catch (IOException e) {
             plugin.getLogger().log(Level.WARNING, "Failed to download the newest version", e);
         }

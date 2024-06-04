@@ -1,7 +1,6 @@
 package com.github.devcyntrix.deathchest.controller;
 
-import com.github.devcyntrix.deathchest.CraftDeathChestModel;
-import com.github.devcyntrix.deathchest.DeathChestPlugin;
+import com.github.devcyntrix.deathchest.DeathChestCorePlugin;
 import com.github.devcyntrix.deathchest.api.ChestView;
 import com.github.devcyntrix.deathchest.api.DeathChestService;
 import com.github.devcyntrix.deathchest.api.audit.AuditAction;
@@ -15,6 +14,7 @@ import com.github.devcyntrix.deathchest.api.model.ThiefProtectionOptions;
 import com.github.devcyntrix.deathchest.api.storage.DeathChestStorage;
 import com.github.devcyntrix.deathchest.audit.CraftAuditItem;
 import com.github.devcyntrix.deathchest.audit.CraftCreateChestInfo;
+import com.github.devcyntrix.deathchest.model.CraftDeathChestModel;
 import com.github.devcyntrix.deathchest.util.ChestModelStringLookup;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
@@ -54,7 +54,7 @@ public class CraftDeathChestController implements DeathChestController {
 
     private final Function<Long, String> durationFormat;
 
-    public CraftDeathChestController(DeathChestPlugin service, Logger logger, AuditManager auditManager, DeathChestStorage storage) {
+    public CraftDeathChestController(DeathChestCorePlugin service, Logger logger, AuditManager auditManager, DeathChestStorage storage) {
         this.service = service;
         this.logger = logger;
         this.auditManager = auditManager;
@@ -105,7 +105,7 @@ public class CraftDeathChestController implements DeathChestController {
 
         model.setInventory(inventoryOptions.createInventory(model, title -> {
             title = substitution.replace(title);
-            if (DeathChestPlugin.isPlaceholderAPIEnabled()) {
+            if (DeathChestCorePlugin.isPlaceholderAPIEnabled()) {
                 title = PlaceholderAPI.setPlaceholders(player, title);
             }
             return title;

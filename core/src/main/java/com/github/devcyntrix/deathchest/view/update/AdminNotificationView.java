@@ -1,25 +1,22 @@
 package com.github.devcyntrix.deathchest.view.update;
 
-import com.github.devcyntrix.deathchest.DeathChestPlugin;
+import com.github.devcyntrix.deathchest.api.DeathChestService;
+import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
 
 import java.util.function.Consumer;
 
+@RequiredArgsConstructor
 public class AdminNotificationView implements Consumer<String> {
-
-    private final DeathChestPlugin plugin;
-
-    public AdminNotificationView(DeathChestPlugin plugin) {
-        this.plugin = plugin;
-    }
+    private final DeathChestService service;
 
     @Override
     public void accept(String version) {
         Bukkit.getOnlinePlayers().stream()
                 .filter(player -> player.hasPermission("deathchest.update"))
                 .forEach(player -> {
-                    player.sendMessage(this.plugin.getPrefix() + "§cA new version " + version + " is out.");
-                    player.sendMessage(this.plugin.getPrefix() + "§cPlease update the plugin at " + plugin.getDescription().getWebsite());
+                    player.sendMessage(this.service.getPrefix() + "§cA new version " + version + " is out.");
+                    player.sendMessage(this.service.getPrefix() + "§cPlease update the plugin at " + service.getDescription().getWebsite());
                 });
     }
 }

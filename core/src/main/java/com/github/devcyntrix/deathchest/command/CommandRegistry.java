@@ -4,7 +4,7 @@ import cloud.commandframework.Command;
 import cloud.commandframework.CommandManager;
 import cloud.commandframework.bukkit.BukkitCommandManager;
 import cloud.commandframework.execution.CommandExecutionCoordinator;
-import com.github.devcyntrix.deathchest.DeathChestPlugin;
+import com.github.devcyntrix.deathchest.DeathChestCorePlugin;
 import com.github.devcyntrix.deathchest.command.admin.BlacklistCommandProvider;
 import com.github.devcyntrix.deathchest.command.admin.DeleteinworldCommandProvider;
 import com.github.devcyntrix.deathchest.command.admin.ReloadCommandProvider;
@@ -19,7 +19,7 @@ import java.util.function.Function;
 public class CommandRegistry {
     private final CommandManager<CommandSender> commandManager;
 
-    public static CommandRegistry create(DeathChestPlugin plugin) throws Exception {
+    public static CommandRegistry create(DeathChestCorePlugin plugin) throws Exception {
         return new CommandRegistry(new BukkitCommandManager<>(
                 plugin,
                 CommandExecutionCoordinator.simpleCoordinator(),
@@ -28,7 +28,7 @@ public class CommandRegistry {
         ));
     }
 
-    public void registerCommands(DeathChestPlugin plugin) {
+    public void registerCommands(DeathChestCorePlugin plugin) {
         Command.Builder<CommandSender> rootCommand = commandManager.commandBuilder("deathchest");
 
         commandManager.command(rootCommand);

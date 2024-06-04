@@ -1,4 +1,4 @@
-package com.github.devcyntrix.deathchest;
+package com.github.devcyntrix.deathchest.model;
 
 import com.github.devcyntrix.deathchest.api.controller.PlaceholderController;
 import com.github.devcyntrix.deathchest.api.hologram.Hologram;

@@ -6,7 +6,7 @@ import be.seeseemelk.mockbukkit.WorldMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import com.github.devcyntrix.deathchest.api.model.DeathChestConfig;
 import com.github.devcyntrix.deathchest.api.model.DeathChestModel;
-import com.github.devcyntrix.deathchest.config.CraftDeathChestConfig;
+import com.github.devcyntrix.deathchest.model.CraftDeathChestConfig;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -47,7 +47,7 @@ public class ChestBreakTest {
         }
 
         this.server = MockBukkit.getOrCreateMock();
-        DeathChestPlugin plugin = MockBukkit.load(DeathChestPlugin.class, true, config);
+        DeathChestCorePlugin plugin = MockBukkit.load(DeathChestCorePlugin.class, true, config);
 
         this.player = server.addPlayer();
         this.content = new ArrayList<>(List.of(new ItemStack(Material.OAK_LOG)));

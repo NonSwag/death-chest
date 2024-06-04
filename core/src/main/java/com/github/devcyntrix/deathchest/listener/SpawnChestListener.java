@@ -1,6 +1,6 @@
 package com.github.devcyntrix.deathchest.listener;
 
-import com.github.devcyntrix.deathchest.DeathChestPlugin;
+import com.github.devcyntrix.deathchest.DeathChestCorePlugin;
 import com.github.devcyntrix.deathchest.api.DeathChestService;
 import com.github.devcyntrix.deathchest.api.event.DeathChestSpawnEvent;
 import com.github.devcyntrix.deathchest.api.event.PreDeathChestSpawnEvent;
@@ -172,7 +172,7 @@ public class SpawnChestListener implements Listener {
         lastSafePos.setY(Math.min(Math.max(lastSafePos.getBlockY(), world.getMinHeight()), world.getMaxHeight() - 1)); // -1 because the max height is exclusive
 
         service.debug(1, "Checking protection service...");
-        boolean build = service.getProtectionService().canBuild(player, lastSafePos, Material.CHEST);
+        boolean build = service.getServiceSupportProvider().getProtectionService().canBuild(player, lastSafePos, Material.CHEST);
         if (!build)
             return;
 
@@ -183,7 +183,7 @@ public class SpawnChestListener implements Listener {
                 StringSubstitutor substitution = new StringSubstitutor(Map.of("x", lastSafePos.getBlockX(), "y", lastSafePos.getBlockY(), "z", lastSafePos.getBlockZ(), "world", lastSafePos.getWorld().getName(), "player_name", player.getName(), "player_display_name", player.getDisplayName()));
 
                 event.setDeathMessage(Arrays.stream(changeDeathMessageOptions.message()).map(substitution::replace).map(s -> {
-                    if (DeathChestPlugin.isPlaceholderAPIEnabled()) {
+                    if (DeathChestCorePlugin.isPlaceholderAPIEnabled()) {
                         return PlaceholderAPI.setPlaceholders(player, s);
                     }
                     return s;
@@ -222,7 +222,5 @@ public class SpawnChestListener implements Listener {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
-
 }

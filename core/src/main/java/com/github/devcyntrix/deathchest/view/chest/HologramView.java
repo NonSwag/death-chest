@@ -1,6 +1,6 @@
 package com.github.devcyntrix.deathchest.view.chest;
 
-import com.github.devcyntrix.deathchest.DeathChestPlugin;
+import com.github.devcyntrix.deathchest.DeathChestCorePlugin;
 import com.github.devcyntrix.deathchest.api.ChestView;
 import com.github.devcyntrix.deathchest.api.controller.HologramController;
 import com.github.devcyntrix.deathchest.api.controller.PlaceholderController;
@@ -18,7 +18,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class HologramView implements ChestView {
 
-    private final DeathChestPlugin plugin;
+    private final DeathChestCorePlugin plugin;
     private final HologramController controller;
     private final HologramOptions options;
 

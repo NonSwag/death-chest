@@ -6,7 +6,7 @@ import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import com.github.devcyntrix.deathchest.api.model.DeathChestConfig;
 import com.github.devcyntrix.deathchest.api.model.DeathChestModel;
 import com.github.devcyntrix.deathchest.api.model.NoExpirationPermission;
-import com.github.devcyntrix.deathchest.config.CraftDeathChestConfig;
+import com.github.devcyntrix.deathchest.model.CraftDeathChestConfig;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -23,7 +23,7 @@ import java.util.List;
 public class NoExpirationChestPermissionTest {
 
     private ServerMock server;
-    private DeathChestPlugin plugin;
+    private DeathChestCorePlugin plugin;
 
     private List<ItemStack> content;
     private PlayerMock player;
@@ -41,7 +41,7 @@ public class NoExpirationChestPermissionTest {
         }
 
         this.server = MockBukkit.getOrCreateMock();
-        this.plugin = MockBukkit.load(DeathChestPlugin.class, true, config);
+        this.plugin = MockBukkit.load(DeathChestCorePlugin.class, true, config);
 
         this.player = server.addPlayer();
         this.content = new ArrayList<>(List.of(new ItemStack(Material.OAK_LOG)));

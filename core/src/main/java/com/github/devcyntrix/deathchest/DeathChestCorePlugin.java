@@ -1,9 +1,7 @@
 package com.github.devcyntrix.deathchest;
 
 import com.github.devcyntrix.deathchest.api.DeathChestService;
-import com.github.devcyntrix.deathchest.api.animation.BreakAnimationService;
 import com.github.devcyntrix.deathchest.api.audit.AuditManager;
-import com.github.devcyntrix.deathchest.api.compatibility.CompatibilityLoader;
 import com.github.devcyntrix.deathchest.api.compatibility.CompatibilityManager;
 import com.github.devcyntrix.deathchest.api.controller.DeathChestController;
 import com.github.devcyntrix.deathchest.api.controller.HologramController;
@@ -12,16 +10,15 @@ import com.github.devcyntrix.deathchest.api.controller.PlaceholderController;
 import com.github.devcyntrix.deathchest.api.model.BreakAnimationOptions;
 import com.github.devcyntrix.deathchest.api.model.DeathChestConfig;
 import com.github.devcyntrix.deathchest.api.model.DeathChestModel;
-import com.github.devcyntrix.deathchest.api.protection.ProtectionService;
 import com.github.devcyntrix.deathchest.api.report.ReportManager;
 import com.github.devcyntrix.deathchest.api.storage.DeathChestStorage;
 import com.github.devcyntrix.deathchest.audit.GsonAuditManager;
 import com.github.devcyntrix.deathchest.blacklist.CraftItemBlacklist;
 import com.github.devcyntrix.deathchest.blacklist.ItemBlacklistListener;
 import com.github.devcyntrix.deathchest.command.CommandRegistry;
-import com.github.devcyntrix.deathchest.config.CraftDeathChestConfig;
 import com.github.devcyntrix.deathchest.controller.*;
 import com.github.devcyntrix.deathchest.listener.*;
+import com.github.devcyntrix.deathchest.model.CraftDeathChestConfig;
 import com.github.devcyntrix.deathchest.report.GsonReportManager;
 import com.github.devcyntrix.deathchest.support.lock.LWCCompatibility;
 import com.github.devcyntrix.deathchest.support.lock.LocketteXCompatibility;
@@ -40,7 +37,6 @@ import com.google.gson.GsonBuilder;
 import com.google.inject.Singleton;
 import lombok.Getter;
 import lombok.SneakyThrows;
-import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -74,19 +70,15 @@ import static com.github.devcyntrix.deathchest.api.report.ReportManager.DATE_FOR
  */
 @Getter
 @Singleton
-public class DeathChestPlugin extends JavaPlugin implements DeathChestService {
-
+public abstract class DeathChestCorePlugin extends JavaPlugin implements DeathChestService {
     public static final int RESOURCE_ID = 101066;
     public static final int BSTATS_ID = 14866;
 
-
-    private DeathChestConfig deathChestConfig;
-
-    private BreakAnimationService breakAnimationService;
-    private ProtectionService protectionService;
-
     @Getter
     private static boolean placeholderAPIEnabled;
+
+
+    private final CompatibilityManager compatibilityManager = new CompatibilityManager(this);
 
     private ReportManager reportManager;
 
@@ -108,20 +100,16 @@ public class DeathChestPlugin extends JavaPlugin implements DeathChestService {
     private DeathChestController deathChestController;
 
     private LastSafeLocationController lastSafeLocationController;
-
-    @Getter
-    private BukkitAudiences audiences;
-
-    private CompatibilityManager compatibilityManager;
+    private DeathChestConfig deathChestConfig;
 
     private final boolean test;
 
-    public DeathChestPlugin(Boolean test, DeathChestConfig config) {
+    public DeathChestCorePlugin(Boolean test, DeathChestConfig config) {
         this.test = test;
         this.deathChestConfig = config;
     }
 
-    public DeathChestPlugin() {
+    public DeathChestCorePlugin() {
         this.test = false;
     }
 
@@ -207,12 +195,7 @@ public class DeathChestPlugin extends JavaPlugin implements DeathChestService {
             this.auditManager = null;
         }
 
-        if (this.compatibilityManager != null) {
-            this.compatibilityManager.disableCompatibilities();
-        }
-
-        if (this.audiences != null)
-            this.audiences.close();
+        this.compatibilityManager.disableCompatibilities();
     }
 
     @Override
@@ -230,17 +213,17 @@ public class DeathChestPlugin extends JavaPlugin implements DeathChestService {
     @Override
     @SneakyThrows
     public void onEnable() {
-        debug(0, "Loading configuration file...");
-        if (!isTest())
+        if (!isTest()) {
+            debug(0, "Loading configuration file...");
             reloadConfig();
-
+        }
 
         initializeServices();
 
         debug(0, "Registering commands...");
         CommandRegistry.create(this).registerCommands(this);
 
-        if (!test) {
+        if (!isTest()) {
             debug(0, "Starting metrics...");
             new Metrics(this, BSTATS_ID);
         }
@@ -248,15 +231,9 @@ public class DeathChestPlugin extends JavaPlugin implements DeathChestService {
 
     private void initializeServices() {
         placeholderAPIEnabled = Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI");
-        this.audiences = BukkitAudiences.create(this);
 
         debug(0, "Creating hologram controller...");
         this.hologramController = new CraftHologramController(this);
-
-        debug(0, "Selecting animation service...");
-        this.breakAnimationService = SupportServices.getBlockBreakAnimationService(this, this.deathChestConfig.preferredBlockBreakAnimationService());
-        debug(0, "Selecting protection services...");
-        this.protectionService = SupportServices.getProtectionService(this);
 
         PluginManager pluginManager = getServer().getPluginManager();
 
@@ -317,7 +294,7 @@ public class DeathChestPlugin extends JavaPlugin implements DeathChestService {
 
             BreakAnimationOptions breakAnimationOptions = getDeathChestConfig().breakAnimationOptions();
             if (breakAnimationOptions.enabled()) {
-                this.deathChestController.registerAdapter(new BreakAnimationView(this, getBreakAnimationService(), breakAnimationOptions));
+                this.deathChestController.registerAdapter(new BreakAnimationView(this, breakAnimationOptions));
             }
 
             var particleOptions = getDeathChestConfig().particleOptions();
@@ -332,8 +309,6 @@ public class DeathChestPlugin extends JavaPlugin implements DeathChestService {
             throw new RuntimeException(e);
         }
 
-        CompatibilityLoader loader = new CompatibilityLoader();
-        this.compatibilityManager = new CompatibilityManager(this, loader);
         this.compatibilityManager.registerCompatibility(LWCCompatibility.class);
         this.compatibilityManager.registerCompatibility(LocketteXCompatibility.class);
         this.compatibilityManager.registerCompatibility(PlaceholderAPICompatibility.class);
@@ -489,11 +464,6 @@ public class DeathChestPlugin extends JavaPlugin implements DeathChestService {
     @Override
     public HologramController getHologramController() {
         return hologramController;
-    }
-
-    @Override
-    public @NotNull ProtectionService getProtectionService() {
-        return protectionService;
     }
 
     public String getPrefix() {

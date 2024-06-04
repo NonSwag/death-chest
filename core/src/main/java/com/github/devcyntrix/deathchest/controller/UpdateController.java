@@ -1,6 +1,6 @@
 package com.github.devcyntrix.deathchest.controller;
 
-import com.github.devcyntrix.deathchest.DeathChestPlugin;
+import com.github.devcyntrix.deathchest.DeathChestCorePlugin;
 import com.github.devcyntrix.deathchest.util.update.HangarUpdateChecker;
 import com.github.devcyntrix.deathchest.util.update.UpdateChecker;
 import com.google.inject.Inject;
@@ -29,7 +29,7 @@ public class UpdateController implements Closeable {
     private final List<Consumer<String>> subscriberList = new ArrayList<>();
 
     @Inject
-    public UpdateController(DeathChestPlugin plugin) {
+    public UpdateController(DeathChestCorePlugin plugin) {
         UpdateChecker checker = new HangarUpdateChecker(plugin);
         updateScheduler = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () -> {
             String version = checker.getLatestRelease();

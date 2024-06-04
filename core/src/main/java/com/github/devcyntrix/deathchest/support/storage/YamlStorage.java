@@ -1,10 +1,10 @@
 package com.github.devcyntrix.deathchest.support.storage;
 
-import com.github.devcyntrix.deathchest.CraftDeathChestModel;
 import com.github.devcyntrix.deathchest.api.DeathChestService;
 import com.github.devcyntrix.deathchest.api.controller.PlaceholderController;
 import com.github.devcyntrix.deathchest.api.model.DeathChestModel;
 import com.github.devcyntrix.deathchest.api.storage.DeathChestStorage;
+import com.github.devcyntrix.deathchest.model.CraftDeathChestModel;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;

@@ -1,13 +1,9 @@
 import io.papermc.hangarpublishplugin.model.Platforms
-import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
-import net.minecrell.pluginyml.paper.PaperPluginDescription
 
 plugins {
     id("java-library")
     id("xyz.jpenilla.run-paper") version "2.3.0"
     id("io.github.goooler.shadow") version "8.1.7"
-    id("net.minecrell.plugin-yml.paper") version "0.6.0"
-    id("net.minecrell.plugin-yml.bukkit") version "0.6.0"
     id("io.papermc.hangar-publish-plugin") version "0.1.2"
 }
 
@@ -34,17 +30,20 @@ repositories {
 dependencies {
     compileOnly("com.google.inject:guice:7.0.0")
     compileOnly("org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT")
-    compileOnly("net.kyori:adventure-platform-bukkit:4.3.0")
-    compileOnly("net.kyori:adventure-text-minimessage:4.14.0")
-    compileOnly("net.kyori:adventure-text-serializer-legacy:4.14.0")
+
+    compileOnly("net.kyori:adventure-text-minimessage:4.17.0")
+    compileOnly("net.kyori:adventure-text-serializer-legacy:4.17.0")
 
     // Command library
-    compileOnly("cloud.commandframework:cloud-core:1.7.1")
-    compileOnly("cloud.commandframework:cloud-bukkit:1.7.1")
+    implementation("cloud.commandframework:cloud-core:1.7.1")
+    implementation("cloud.commandframework:cloud-bukkit:1.7.1")
 
+    implementation("org.apache.commons:commons-text:1.10.0")
     implementation("org.bstats:bstats-bukkit:3.0.2")
 
     implementation(project(":api"))
+    runtimeOnly(project(":paper"))
+    runtimeOnly(project(":spigot"))
 
     // Protection Support
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7")
@@ -65,7 +64,6 @@ dependencies {
     // Lock
     compileOnly("com.griefcraft:lwc:2.3.2-dev")
 
-    compileOnly("org.apache.commons:commons-text:1.10.0")
     compileOnly("org.jetbrains:annotations:24.1.0")
 
     compileOnly("org.projectlombok:lombok:1.18.32")
@@ -190,136 +188,4 @@ hangarPublish {
         }
 
     }
-}
-
-bukkit {
-    name = "DeathChest"
-    main = "com.github.devcyntrix.deathchest.DeathChestPlugin"
-    author = "CyntrixAlgorithm"
-    apiVersion = "1.17"
-    website = "https://www.spigotmc.org/resources/death-chest.101066/"
-    load = BukkitPluginDescription.PluginLoadOrder.STARTUP
-    softDepend = listOf(
-        "WorldGuard",
-        "ProtocolLib",
-        "GriefPrevention",
-        "GriefDefender",
-        "PlaceholderAPI",
-        "RedProtect",
-        "minePlots",
-        "LocketteX",
-        "LWC"
-    )
-    libraries = listOf(
-        "org.apache.commons:commons-text:1.10.0",
-        "com.google.inject:guice:7.0.0",
-        "cloud.commandframework:cloud-core:1.7.1",
-        "cloud.commandframework:cloud-bukkit:1.7.1",
-        "net.kyori:adventure-platform-bukkit:4.3.0",
-        "net.kyori:adventure-text-minimessage:4.14.0",
-        "net.kyori:adventure-text-serializer-legacy:4.14.0",
-        "org.bstats:bstats-bukkit:3.0.2"
-    )
-    permissions {
-        register("deathchest.command.report") {
-            description = "The permission to create, read and delete reports of the plugin"
-            default = BukkitPluginDescription.Permission.Default.OP
-        }
-        register("deathchest.command.deleteInWorld") {
-            description = "The permission to delete all chests in all or a specific world"
-            default = BukkitPluginDescription.Permission.Default.OP
-        }
-        register("deathchest.command.reload") {
-            description = "The permission to reload the configuration file of the DeathChest plugin"
-            default = BukkitPluginDescription.Permission.Default.OP
-        }
-        register("deathchest.update") {
-            description = "Notifies the player about plugin updates."
-            default = BukkitPluginDescription.Permission.Default.OP
-        }
-        register("deathchest.admin") {
-            default = BukkitPluginDescription.Permission.Default.OP
-            children = listOf(
-                "deathchest.command.deathchest",
-                "deathchest.command.report",
-                "deathchest.command.deleteInWorld",
-                "deathchest.command.reload"
-            )
-        }
-    }
-}
-
-paper {
-    name = "DeathChest"
-    main = "com.github.devcyntrix.deathchest.DeathChestPlugin"
-    author = "CyntrixAlgorithm"
-    apiVersion = "1.20"
-    website = "https://www.spigotmc.org/resources/death-chest.101066/"
-    load = BukkitPluginDescription.PluginLoadOrder.STARTUP
-    serverDependencies {
-        register("WorldGuard") {
-            load = PaperPluginDescription.RelativeLoadOrder.BEFORE
-            required = false
-        }
-        register("ProtocolLib") {
-            load = PaperPluginDescription.RelativeLoadOrder.BEFORE
-            required = false
-        }
-        register("GriefPrevention") {
-            load = PaperPluginDescription.RelativeLoadOrder.BEFORE
-            required = false
-        }
-        register("GriefDefender") {
-            load = PaperPluginDescription.RelativeLoadOrder.BEFORE
-            required = false
-        }
-        register("PlaceholderAPI") {
-            load = PaperPluginDescription.RelativeLoadOrder.BEFORE
-            required = false
-        }
-        register("RedProtect") {
-            load = PaperPluginDescription.RelativeLoadOrder.BEFORE
-            required = false
-        }
-        register("minePlots") {
-            load = PaperPluginDescription.RelativeLoadOrder.BEFORE
-            required = false
-        }
-        register("LocketteX") {
-            load = PaperPluginDescription.RelativeLoadOrder.BEFORE
-            required = false
-        }
-        register("LWC") {
-            load = PaperPluginDescription.RelativeLoadOrder.BEFORE
-            required = false
-        }
-    }
-    permissions {
-        register("deathchest.command.report") {
-            description = "The permission to create, read and delete reports of the plugin"
-            default = BukkitPluginDescription.Permission.Default.OP
-        }
-        register("deathchest.command.deleteInWorld") {
-            description = "The permission to delete all chests in all or a specific world"
-            default = BukkitPluginDescription.Permission.Default.OP
-        }
-        register("deathchest.command.reload") {
-            description = "The permission to reload the configuration file of the DeathChest plugin"
-            default = BukkitPluginDescription.Permission.Default.OP
-        }
-        register("deathchest.update") {
-            description = "Notifies the player about plugin updates."
-            default = BukkitPluginDescription.Permission.Default.OP
-        }
-        register("deathchest.admin") {
-            default = BukkitPluginDescription.Permission.Default.OP
-            children = listOf(
-                "deathchest.command.deathchest",
-                "deathchest.command.report",
-                "deathchest.command.deleteInWorld",
-                "deathchest.command.reload"
-            )
-        }
-    }
-    generateLibrariesJson = true
 }

@@ -20,9 +20,9 @@ dependencies {
     compileOnly("org.projectlombok:lombok:1.18.32")
 
     compileOnly("org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT")
-    compileOnly("net.kyori:adventure-platform-bukkit:4.3.0")
-    compileOnly("net.kyori:adventure-text-minimessage:4.14.0")
-    compileOnly("net.kyori:adventure-text-serializer-legacy:4.14.0")
+    compileOnly("net.kyori:adventure-platform-bukkit:4.3.3")
+    compileOnly("net.kyori:adventure-text-minimessage:4.17.0")
+    compileOnly("net.kyori:adventure-text-serializer-legacy:4.17.0")
 
     annotationProcessor("org.projectlombok:lombok:1.18.32")
 }

@@ -11,12 +11,10 @@ import java.util.Set;
 
 @RequiredArgsConstructor
 public class CompatibilityManager {
-
     private final Set<Class<? extends Compatibility>> registeredCompatibilities = new HashSet<>();
     private final Map<Class<? extends Compatibility>, Compatibility> instances = new HashMap<>();
 
     private final DeathChestService plugin;
-    private final CompatibilityLoader loader;
 
     public boolean registerCompatibility(Class<? extends Compatibility> clazz) {
         return this.registeredCompatibilities.add(clazz);
@@ -40,7 +38,8 @@ public class CompatibilityManager {
 
         for (Class<? extends Compatibility> rc : registeredCompatibilities) {
             try {
-                Compatibility load = loader.load(rc);
+                var constructor = rc.getConstructor();
+                var load = constructor.newInstance();
                 if (!load.isValid(plugin.getServer()))
                     continue;
                 if (!load.activate(plugin)) {

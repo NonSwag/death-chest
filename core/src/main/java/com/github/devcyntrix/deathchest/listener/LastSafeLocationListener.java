@@ -1,6 +1,6 @@
 package com.github.devcyntrix.deathchest.listener;
 
-import com.github.devcyntrix.deathchest.DeathChestPlugin;
+import com.github.devcyntrix.deathchest.DeathChestCorePlugin;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,9 +9,9 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 public class LastSafeLocationListener implements Listener {
 
-    private final DeathChestPlugin plugin;
+    private final DeathChestCorePlugin plugin;
 
-    public LastSafeLocationListener(DeathChestPlugin plugin) {
+    public LastSafeLocationListener(DeathChestCorePlugin plugin) {
         this.plugin = plugin;
     }
 

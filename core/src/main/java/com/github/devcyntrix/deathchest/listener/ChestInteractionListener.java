@@ -1,6 +1,6 @@
 package com.github.devcyntrix.deathchest.listener;
 
-import com.github.devcyntrix.deathchest.DeathChestPlugin;
+import com.github.devcyntrix.deathchest.DeathChestCorePlugin;
 import com.github.devcyntrix.deathchest.api.model.ThiefProtectionOptions;
 import org.bukkit.GameMode;
 import org.bukkit.block.Block;
@@ -13,9 +13,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class ChestInteractionListener implements Listener {
 
-    private final DeathChestPlugin plugin;
+    private final DeathChestCorePlugin plugin;
 
-    public ChestInteractionListener(DeathChestPlugin plugin) {
+    public ChestInteractionListener(DeathChestCorePlugin plugin) {
         this.plugin = plugin;
     }
 

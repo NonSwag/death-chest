@@ -1,12 +1,12 @@
 package com.github.devcyntrix.deathchest.listener;
 
-import com.github.devcyntrix.deathchest.CraftDeathChestModel;
-import com.github.devcyntrix.deathchest.DeathChestPlugin;
+import com.github.devcyntrix.deathchest.DeathChestCorePlugin;
 import com.github.devcyntrix.deathchest.api.audit.AuditAction;
 import com.github.devcyntrix.deathchest.api.audit.info.DestroyReason;
 import com.github.devcyntrix.deathchest.api.model.ThiefProtectionOptions;
 import com.github.devcyntrix.deathchest.audit.CraftAuditItem;
 import com.github.devcyntrix.deathchest.audit.CraftDestroyChestInfo;
+import com.github.devcyntrix.deathchest.model.CraftDeathChestModel;
 import org.bukkit.GameMode;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -29,9 +29,9 @@ import java.util.*;
 
 public class ChestDestroyListener implements Listener {
 
-    private final DeathChestPlugin plugin;
+    private final DeathChestCorePlugin plugin;
 
-    public ChestDestroyListener(DeathChestPlugin plugin) {
+    public ChestDestroyListener(DeathChestCorePlugin plugin) {
         this.plugin = plugin;
     }
 

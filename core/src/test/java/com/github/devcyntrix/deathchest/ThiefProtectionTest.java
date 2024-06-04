@@ -6,7 +6,7 @@ import be.seeseemelk.mockbukkit.WorldMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import com.github.devcyntrix.deathchest.api.model.DeathChestConfig;
 import com.github.devcyntrix.deathchest.api.model.DeathChestModel;
-import com.github.devcyntrix.deathchest.config.CraftDeathChestConfig;
+import com.github.devcyntrix.deathchest.model.CraftDeathChestConfig;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 public class ThiefProtectionTest {
 
     private ServerMock server;
-    private DeathChestPlugin plugin;
+    private DeathChestCorePlugin plugin;
 
     private List<ItemStack> content;
 
@@ -53,7 +53,7 @@ public class ThiefProtectionTest {
 
         this.server = MockBukkit.getOrCreateMock();
         this.server.setSpawnRadius(0);
-        this.plugin = MockBukkit.load(DeathChestPlugin.class, true, config);
+        this.plugin = MockBukkit.load(DeathChestCorePlugin.class, true, config);
         this.content = new ArrayList<>(List.of(new ItemStack(Material.OAK_LOG)));
     }
 

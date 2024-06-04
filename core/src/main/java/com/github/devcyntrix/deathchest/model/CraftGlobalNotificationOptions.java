@@ -1,27 +1,25 @@
-package com.github.devcyntrix.deathchest.config;
+package com.github.devcyntrix.deathchest.model;
 
+import com.github.devcyntrix.deathchest.DeathChestCorePlugin;
 import com.github.devcyntrix.deathchest.api.controller.PlaceholderController;
 import com.github.devcyntrix.deathchest.api.model.DeathChestModel;
-import com.github.devcyntrix.deathchest.api.model.PlayerNotificationOptions;
+import com.github.devcyntrix.deathchest.api.model.GlobalNotificationOptions;
 import com.google.gson.annotations.SerializedName;
-import net.kyori.adventure.audience.Audience;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.configuration.ConfigurationSection;
-import org.jetbrains.annotations.Contract;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public record CraftPlayerNotificationOptions(
+public record CraftGlobalNotificationOptions(
         @SerializedName("enabled") boolean enabled,
-        @SerializedName("messages") String[] message) implements PlayerNotificationOptions {
+        @SerializedName("message") String[] message) implements GlobalNotificationOptions {
 
-    @Contract("null -> new")
-    public static @NotNull CraftPlayerNotificationOptions load(@Nullable ConfigurationSection section) {
+    public static @NotNull CraftGlobalNotificationOptions load(@Nullable ConfigurationSection section) {
         if (section == null)
-            return new CraftPlayerNotificationOptions(false, null);
+            return new CraftGlobalNotificationOptions(false, null);
 
         boolean enabled = section.getBoolean("enabled", false);
         String message = section.getString("message");
@@ -33,15 +31,14 @@ public record CraftPlayerNotificationOptions(
             coloredMessage = serialize.split("\n");
         }
 
-        return new CraftPlayerNotificationOptions(enabled, coloredMessage);
+        return new CraftGlobalNotificationOptions(enabled, coloredMessage);
     }
 
-    public void showNotification(Audience audience, DeathChestModel model, PlaceholderController controller) {
+    public void showNotification(DeathChestModel model, PlaceholderController controller) {
+        var plugin = JavaPlugin.getPlugin(DeathChestCorePlugin.class);
         for (String message : message()) {
             message = controller.replace(model, message);
-
-            Component deserialize = MiniMessage.miniMessage().deserialize(message);
-            audience.sendMessage(deserialize);
+            plugin.broadcast(MiniMessage.miniMessage().deserialize(message));
         }
     }
 }

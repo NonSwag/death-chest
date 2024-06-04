@@ -1,6 +1,6 @@
 package com.github.devcyntrix.deathchest.listener;
 
-import com.github.devcyntrix.deathchest.DeathChestPlugin;
+import com.github.devcyntrix.deathchest.DeathChestCorePlugin;
 import com.github.devcyntrix.deathchest.api.event.InventoryChangeSlotItemEvent;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
@@ -97,7 +97,7 @@ public class InventoryChangeSlotItemListener implements Listener {
                     event.setCancelled(itemEvent.isCancelled());
 
                     if (event.getWhoClicked() instanceof Player player) {
-                        Bukkit.getScheduler().runTask(JavaPlugin.getPlugin(DeathChestPlugin.class), player::updateInventory);
+                        Bukkit.getScheduler().runTask(JavaPlugin.getPlugin(DeathChestCorePlugin.class), player::updateInventory);
                     }
                 }
                 break;

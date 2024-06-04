@@ -1,6 +1,6 @@
 package com.github.devcyntrix.deathchest.view.update;
 
-import com.github.devcyntrix.deathchest.DeathChestPlugin;
+import com.github.devcyntrix.deathchest.DeathChestCorePlugin;
 import com.github.devcyntrix.deathchest.controller.UpdateController;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,10 +9,10 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class AdminJoinNotificationView implements Listener {
 
-    private final DeathChestPlugin plugin;
+    private final DeathChestCorePlugin plugin;
     private final UpdateController controller;
 
-    public AdminJoinNotificationView(DeathChestPlugin plugin, UpdateController controller) {
+    public AdminJoinNotificationView(DeathChestCorePlugin plugin, UpdateController controller) {
         this.plugin = plugin;
         this.controller = controller;
     }

@@ -83,6 +83,7 @@ tasks.shadowJar {
 }
 
 tasks.runServer {
+    dependsOn("shadowJar")
     minecraftVersion("1.20.6")
 }
 

@@ -3,7 +3,6 @@ import net.minecrell.pluginyml.paper.PaperPluginDescription
 
 plugins {
     id("java")
-    id("xyz.jpenilla.run-paper") version "2.3.0"
     id("net.minecrell.plugin-yml.paper") version "0.6.0"
 }
 
@@ -13,10 +12,6 @@ version = project(":api").version
 java {
     targetCompatibility = JavaVersion.VERSION_21
     sourceCompatibility = JavaVersion.VERSION_21
-}
-
-tasks.runServer {
-    minecraftVersion("1.20.6")
 }
 
 repositories {

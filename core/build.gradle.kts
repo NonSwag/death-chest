@@ -2,7 +2,6 @@ import io.papermc.hangarpublishplugin.model.Platforms
 
 plugins {
     id("java-library")
-    id("xyz.jpenilla.run-paper") version "2.3.0"
     id("io.github.goooler.shadow") version "8.1.7"
     id("io.papermc.hangar-publish-plugin") version "0.1.2"
 }
@@ -77,15 +76,10 @@ java {
     sourceCompatibility = JavaVersion.VERSION_21
 }
 
-tasks.runServer {
-    minecraftVersion("1.20.6")
-}
-
 tasks.shadowJar {
     relocate("org.bstats", "com.github.devcyntrix.deathchest.metrics")
     archiveBaseName.set("deathchest")
 }
-
 
 hangarPublish {
     publications.register("DeathChest") {

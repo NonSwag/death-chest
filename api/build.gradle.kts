@@ -6,6 +6,8 @@ group = "com.github.devcyntrix"
 version = "3.0.0"
 
 java {
+    withSourcesJar()
+    withJavadocJar()
     targetCompatibility = JavaVersion.VERSION_21
     sourceCompatibility = JavaVersion.VERSION_21
 }

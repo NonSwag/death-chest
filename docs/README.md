@@ -1,17 +1,3 @@
----
-layout:
-  title:
-    visible: false
-  description:
-    visible: false
-  tableOfContents:
-    visible: true
-  outline:
-    visible: true
-  pagination:
-    visible: true
----
-
 # Death Chest
 
 <figure><img src=".gitbook/assets/deathchest-logo.png" alt=""><figcaption></figcaption></figure>

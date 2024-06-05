@@ -4,9 +4,7 @@ import com.github.devcyntrix.deathchest.DeathChestCorePlugin;
 import com.github.devcyntrix.deathchest.api.DeathChestService;
 import com.github.devcyntrix.deathchest.api.event.DeathChestSpawnEvent;
 import com.github.devcyntrix.deathchest.api.event.PreDeathChestSpawnEvent;
-import com.github.devcyntrix.deathchest.api.model.ChangeDeathMessageOptions;
 import com.github.devcyntrix.deathchest.api.model.NoExpirationPermission;
-import com.github.devcyntrix.deathchest.api.model.ThiefProtectionOptions;
 import lombok.RequiredArgsConstructor;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.apache.commons.text.StringSubstitutor;
@@ -173,10 +171,9 @@ public class SpawnChestListener implements Listener {
 
         service.debug(1, "Checking protection service...");
         boolean build = service.getServiceSupportProvider().getProtectionService().canBuild(player, lastSafePos, Material.CHEST);
-        if (!build)
-            return;
+        if (!build) return;
 
-        ChangeDeathMessageOptions changeDeathMessageOptions = config.changeDeathMessageOptions();
+        var changeDeathMessageOptions = config.changeDeathMessageOptions();
         if (changeDeathMessageOptions.enabled()) {
             service.debug(1, "Changing death message...");
             if (changeDeathMessageOptions.message() != null && lastSafePos.getWorld() != null) {
@@ -195,15 +192,14 @@ public class SpawnChestListener implements Listener {
 
 
         try {
-            ThiefProtectionOptions thiefProtectionOptions = config.chestOptions().thiefProtectionOptions();
+            var thiefProtectionOptions = config.chestOptions().thiefProtectionOptions();
             boolean protectedChest = thiefProtectionOptions.enabled() && player.hasPermission(thiefProtectionOptions.permission()) && config.worldChestProtectionFilter().test(lastSafePos.getWorld());
             service.debug(1, "Protected chest: %s".formatted(protectedChest));
 
-            PreDeathChestSpawnEvent preSpawn = new PreDeathChestSpawnEvent(player, lastSafePos, protectedChest, createdAt, expireAt, items);
+            var preSpawn = new PreDeathChestSpawnEvent(player, lastSafePos, protectedChest, createdAt, expireAt, items);
             Bukkit.getPluginManager().callEvent(preSpawn);
 
-            if (preSpawn.isCancelled())
-                return;
+            if (preSpawn.isCancelled()) return;
 
             lastSafePos = preSpawn.getLocation();
             protectedChest = preSpawn.isProtectedChest();

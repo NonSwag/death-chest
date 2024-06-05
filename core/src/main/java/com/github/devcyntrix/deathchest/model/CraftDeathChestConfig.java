@@ -4,7 +4,6 @@ import com.github.devcyntrix.deathchest.api.model.*;
 import com.google.gson.annotations.SerializedName;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public record CraftDeathChestConfig(
         @SerializedName("config-version") int configVersion,
@@ -22,8 +21,7 @@ public record CraftDeathChestConfig(
         @SerializedName("change-death-message") @NotNull ChangeDeathMessageOptions changeDeathMessageOptions,
         @SerializedName("world-filter") @NotNull WorldFilterConfig worldFilterConfig,
         @SerializedName("world-chest-protection-filter") @NotNull WorldFilterConfig worldChestProtectionFilter,
-        @SerializedName("world-alias") @NotNull WorldAliasConfig worldAlias,
-        @SerializedName("preferred-animation-service") @Nullable String preferredBlockBreakAnimationService
+        @SerializedName("world-alias") @NotNull WorldAliasConfig worldAlias
 ) implements DeathChestConfig {
 
     public static final int CONFIG_VERSION = 3;
@@ -59,9 +57,7 @@ public record CraftDeathChestConfig(
         CraftWorldFilterConfig worldChestProtectionFilterConfig = CraftWorldFilterConfig.load(config.getConfigurationSection("world-chest-protection-filter"));
         CraftWorldAliasConfig worldAliasConfig = CraftWorldAliasConfig.load(config.getConfigurationSection("world-alias"));
 
-        String preferredAnimationService = config.getString("preferred-animation-service");
-
-        return new CraftDeathChestConfig(configVersion, debug, updateCheck, autoUpdate, durationFormat, chestOptions, inventoryOptions, hologramOptions, particleOptions, breakAnimationOptions, playerNotificationOptions, globalNotificationOptions, changeDeathMessageOptions, worldFilterConfig, worldChestProtectionFilterConfig, worldAliasConfig, preferredAnimationService);
+        return new CraftDeathChestConfig(configVersion, debug, updateCheck, autoUpdate, durationFormat, chestOptions, inventoryOptions, hologramOptions, particleOptions, breakAnimationOptions, playerNotificationOptions, globalNotificationOptions, changeDeathMessageOptions, worldFilterConfig, worldChestProtectionFilterConfig, worldAliasConfig);
     }
 
 }

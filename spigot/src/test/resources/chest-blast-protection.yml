@@ -132,4 +132,4 @@ world-filter:
 # Do not touch this!
 config-version: 3
 # Prints debug messages if property is set to true
-debug: false
+debug: true

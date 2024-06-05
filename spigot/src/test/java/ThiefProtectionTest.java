@@ -1,9 +1,8 @@
-package com.github.devcyntrix.deathchest;
-
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.WorldMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
+import com.github.devcyntrix.deathchest.DeathChestCorePlugin;
 import com.github.devcyntrix.deathchest.api.model.DeathChestConfig;
 import com.github.devcyntrix.deathchest.api.model.DeathChestModel;
 import com.github.devcyntrix.deathchest.model.CraftDeathChestConfig;
@@ -20,6 +19,8 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.InvalidDescriptionException;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.*;
 
@@ -39,8 +40,9 @@ public class ThiefProtectionTest {
 
     private List<ItemStack> content;
 
+    @SuppressWarnings({"unchecked", "DataFlowIssue"})
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws InvalidDescriptionException, ClassNotFoundException {
         InputStream stream = getClass().getClassLoader().getResourceAsStream("thief-protection-config.yml");
         if (stream == null)
             throw new IllegalStateException("Missing config");
@@ -53,7 +55,9 @@ public class ThiefProtectionTest {
 
         this.server = MockBukkit.getOrCreateMock();
         this.server.setSpawnRadius(0);
-        this.plugin = MockBukkit.load(DeathChestCorePlugin.class, true, config);
+        var pdf = new PluginDescriptionFile(getClass().getClassLoader().getResourceAsStream("plugin.yml"));
+        var main = (Class<? extends DeathChestCorePlugin>) Class.forName(pdf.getMainClass());
+        this.plugin = MockBukkit.loadWith(main, pdf, config);
         this.content = new ArrayList<>(List.of(new ItemStack(Material.OAK_LOG)));
     }
 

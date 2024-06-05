@@ -35,7 +35,9 @@ import com.github.devcyntrix.deathchest.view.update.ConsoleNotificationView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.inject.Singleton;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.SneakyThrows;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -70,6 +72,7 @@ import static com.github.devcyntrix.deathchest.api.report.ReportManager.DATE_FOR
  */
 @Getter
 @Singleton
+@Setter(AccessLevel.PROTECTED)
 public abstract class DeathChestCorePlugin extends JavaPlugin implements DeathChestService {
     public static final int RESOURCE_ID = 101066;
     public static final int BSTATS_ID = 14866;
@@ -101,17 +104,6 @@ public abstract class DeathChestCorePlugin extends JavaPlugin implements DeathCh
 
     private LastSafeLocationController lastSafeLocationController;
     private DeathChestConfig deathChestConfig;
-
-    private final boolean test;
-
-    public DeathChestCorePlugin(Boolean test, DeathChestConfig config) {
-        this.test = test;
-        this.deathChestConfig = config;
-    }
-
-    public DeathChestCorePlugin() {
-        this.test = false;
-    }
 
     /**
      * This method cleans the whole plugin up
@@ -269,7 +261,7 @@ public abstract class DeathChestCorePlugin extends JavaPlugin implements DeathCh
             this.placeholderController = new CraftPlaceholderController(getDeathChestConfig());
 
             debug(0, "Using death chest yaml storage");
-            if (!test) {
+            if (!isTest()) {
                 this.deathChestStorage = new YamlStorage(this.placeholderController);
             } else {
                 this.deathChestStorage = new MemoryStorage();
@@ -328,7 +320,7 @@ public abstract class DeathChestCorePlugin extends JavaPlugin implements DeathCh
         pluginManager.registerEvents(new LastSafeLocationListener(this), this);
 
         // Checks for updates
-        if (this.deathChestConfig.updateChecker()) {
+        if (this.deathChestConfig.updateChecker() && !isTest()) {
             debug(0, "Starting update checker...");
             this.updateController = new UpdateController(this);
             this.updateController.subscribe(new ConsoleNotificationView(this, getLogger()));

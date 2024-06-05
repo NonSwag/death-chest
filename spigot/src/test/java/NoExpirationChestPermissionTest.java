@@ -1,8 +1,7 @@
-package com.github.devcyntrix.deathchest;
-
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
+import com.github.devcyntrix.deathchest.DeathChestCorePlugin;
 import com.github.devcyntrix.deathchest.api.model.DeathChestConfig;
 import com.github.devcyntrix.deathchest.api.model.DeathChestModel;
 import com.github.devcyntrix.deathchest.api.model.NoExpirationPermission;
@@ -11,9 +10,11 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.InvalidDescriptionException;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.junit.jupiter.api.*;
 
-import java.io.InputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -29,22 +30,22 @@ public class NoExpirationChestPermissionTest {
     private PlayerMock player;
 
     @BeforeEach
-    public void setUp() {
-        InputStream stream = getClass().getClassLoader().getResourceAsStream("no-expiration-chest-permission-config.yml");
-        if (stream == null)
-            throw new IllegalStateException("Missing config");
-        DeathChestConfig config;
-        try (InputStreamReader reader = new InputStreamReader(stream)) {
-            config = CraftDeathChestConfig.load(YamlConfiguration.loadConfiguration(reader));
-        } catch (Exception e) {
+    @SuppressWarnings({"DataFlowIssue", "unchecked"})
+    public void setUp() throws InvalidDescriptionException, ClassNotFoundException {
+        try (var stream = getClass().getClassLoader().getResourceAsStream("no-expiration-chest-permission-config.yml");
+             var reader = new InputStreamReader(stream)) {
+
+            this.server = MockBukkit.getOrCreateMock();
+            var config = CraftDeathChestConfig.load(YamlConfiguration.loadConfiguration(reader));
+            var pdf = new PluginDescriptionFile(getClass().getClassLoader().getResourceAsStream("plugin.yml"));
+            var main = (Class<? extends DeathChestCorePlugin>) Class.forName(pdf.getMainClass());
+            this.plugin = MockBukkit.loadWith(main, pdf, config);
+
+            this.player = server.addPlayer();
+            this.content = new ArrayList<>(List.of(new ItemStack(Material.OAK_LOG)));
+        } catch (IOException | InvalidDescriptionException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
-        this.server = MockBukkit.getOrCreateMock();
-        this.plugin = MockBukkit.load(DeathChestCorePlugin.class, true, config);
-
-        this.player = server.addPlayer();
-        this.content = new ArrayList<>(List.of(new ItemStack(Material.OAK_LOG)));
     }
 
     @AfterEach

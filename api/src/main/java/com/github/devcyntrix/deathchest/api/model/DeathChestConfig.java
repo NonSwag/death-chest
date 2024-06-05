@@ -1,7 +1,6 @@
 package com.github.devcyntrix.deathchest.api.model;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public interface DeathChestConfig {
     @NotNull
@@ -39,9 +38,6 @@ public interface DeathChestConfig {
 
     @NotNull
     WorldFilterConfig worldFilterConfig();
-
-    @Nullable
-    String preferredBlockBreakAnimationService();
 
     boolean autoUpdate();
 

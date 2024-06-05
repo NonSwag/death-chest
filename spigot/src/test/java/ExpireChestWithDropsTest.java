@@ -1,9 +1,8 @@
-package com.github.devcyntrix.deathchest;
-
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.WorldMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
+import com.github.devcyntrix.deathchest.DeathChestCorePlugin;
 import com.github.devcyntrix.deathchest.api.model.DeathChestConfig;
 import com.github.devcyntrix.deathchest.api.model.DeathChestModel;
 import com.github.devcyntrix.deathchest.api.model.NoExpirationPermission;
@@ -12,6 +11,8 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.InvalidDescriptionException;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.junit.jupiter.api.*;
 
 import java.io.InputStream;
@@ -31,7 +32,8 @@ public class ExpireChestWithDropsTest {
     private DeathChestModel model;
 
     @BeforeEach
-    public void setUp() {
+    @SuppressWarnings({"DataFlowIssue", "unchecked"})
+    public void setUp() throws InvalidDescriptionException, ClassNotFoundException {
         InputStream stream = getClass().getClassLoader().getResourceAsStream("expire-chest-with-drops-config.yml");
         if (stream == null)
             throw new IllegalStateException("Missing config");
@@ -43,7 +45,9 @@ public class ExpireChestWithDropsTest {
         }
 
         this.server = MockBukkit.getOrCreateMock();
-        DeathChestCorePlugin plugin = MockBukkit.load(DeathChestCorePlugin.class, true, config);
+        var pdf = new PluginDescriptionFile(getClass().getClassLoader().getResourceAsStream("plugin.yml"));
+        var main = (Class<? extends DeathChestCorePlugin>) Class.forName(pdf.getMainClass());
+        var plugin = MockBukkit.loadWith(main, pdf, config);
 
         this.player = server.addPlayer();
         this.content = new ArrayList<>(List.of(new ItemStack(Material.OAK_LOG)));

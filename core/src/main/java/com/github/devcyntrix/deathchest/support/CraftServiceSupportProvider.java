@@ -15,59 +15,50 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
 
 @RequiredArgsConstructor
-public class CraftServiceSupportProvider implements ServiceSupportProvider {
-    protected final DeathChestService service;
-
-    private final @Getter Map<String, Function<Plugin, BreakAnimationService>> animationServices = Map.of(
-            "ProtocolLib", plugin -> ProtocolLibrary.getProtocolManager() != null ? new ProtocolLibBreakAnimation() : null
-    );
-
+public abstract class CraftServiceSupportProvider implements ServiceSupportProvider {
     private final @Getter Map<String, Function<Plugin, ProtectionService>> protectionServices = Map.of(
             "WorldGuard", plugin -> new WorldGuardProtection(),
             "PlotSquared", plugin -> new PlotSquaredProtection(),
             "GriefPrevention", plugin -> new GriefPreventionProtection(),
             "RedProtect", plugin -> new RedProtectProtection(),
             "minePlots", plugin -> new MinePlotsProtection(),
-            "protect", plugin -> new ProtectProtection()
+            "Protect", plugin -> new ProtectProtection()
     );
+    protected final DeathChestService service;
 
-    @Override
-    public @Nullable BreakAnimationService getAnimationService() {
-        return getService(getAnimationServices(), service.getDeathChestConfig().preferredBlockBreakAnimationService());
-    }
+    private final @Getter Map<String, Function<Plugin, BreakAnimationService>> animationServices = Map.of(
+            "ProtocolLib", plugin -> ProtocolLibrary.getProtocolManager() != null ? new ProtocolLibBreakAnimation() : null
+    );
+    private @Nullable CombinedProtectionService protectionService;
 
     @Override
     public ProtectionService getProtectionService() {
-        List<ProtectionService> services = new ArrayList<>();
+        if (protectionService != null) return protectionService;
+        var services = new ArrayList<ProtectionService>();
+        getProtectionServices().entrySet().stream()
+                .filter(entry -> isServiceUsable(entry.getKey()))
+                .map(this::mapServiceEntry)
+                .forEach(services::add);
         services.add(new MinecraftProtection());
-        for (Map.Entry<String, Function<Plugin, ProtectionService>> entry : getProtectionServices().entrySet()) {
-            if (!Bukkit.getPluginManager().isPluginEnabled(entry.getKey()))
-                continue;
-            ProtectionService apply = entry.getValue().apply(service);
-            if (apply == null)
-                continue;
-            service.debug(1, "Using " + entry.getKey() + " protection service");
-            services.add(apply);
-        }
-        return new CombinedProtectionService(services.toArray(ProtectionService[]::new));
+        var array = services.toArray(ProtectionService[]::new);
+        return protectionService = new CombinedProtectionService(array);
     }
 
-    public <T> @Nullable T getService(@NotNull Map<String, Function<Plugin, T>> map, @Nullable String preferred) {
-        return Optional.ofNullable(preferred)
-                .filter(this::isServiceUsable)
-                .map(map::get)
-                .map(function -> function.apply(service))
-                .orElseGet(() -> map.entrySet().stream()
-                        .filter(entry -> isServiceUsable(entry.getKey()))
-                        .map(entry -> entry.getValue().apply(this.service))
-                        .findAny()
-                        .orElse(null));
+    public <T> @Nullable T getUsableService(@NotNull Map<String, Function<Plugin, T>> map) {
+        return map.entrySet().stream()
+                .filter(entry -> isServiceUsable(entry.getKey()))
+                .map(this::mapServiceEntry)
+                .findAny()
+                .orElse(null);
+    }
+
+    private <T> T mapServiceEntry(Map.Entry<String, Function<Plugin, T>> entry) {
+        service.debug(1, "Using \"" + entry.getKey() + "\" protection service");
+        return entry.getValue().apply(service);
     }
 
     private boolean isServiceUsable(@NotNull String service) {

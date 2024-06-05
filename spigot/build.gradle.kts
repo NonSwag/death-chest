@@ -10,6 +10,8 @@ version = project(":api").version
 
 repositories {
     mavenCentral()
+    maven("https://repository.minecodes.pl/releases")
+    maven("https://repo.papermc.io/repository/maven-public/")
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
 }
 
@@ -20,11 +22,39 @@ dependencies {
     compileOnly("com.google.inject:guice:7.0.0")
     compileOnly("org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT")
 
-    compileOnly("net.kyori:adventure-platform-bukkit:4.3.3")
+    implementation("net.kyori:adventure-platform-bukkit:4.3.3")
 
     compileOnly("org.projectlombok:lombok:1.18.32")
     annotationProcessor("org.projectlombok:lombok:1.18.32")
+
+    // test dependencies
+
+    testImplementation(project(":api"))
+    testImplementation(project(":core"))
+
+    testCompileOnly("org.jetbrains:annotations:24.1.0")
+
+    testImplementation("org.junit.jupiter:junit-jupiter:5.11.0-M2")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+    testImplementation("com.github.seeseemelk:MockBukkit-v1.20:3.89.0")
+
+    testImplementation("me.clip:placeholderapi:2.11.2") { isTransitive = false }
+    testImplementation("org.slf4j:slf4j-simple:2.1.0-alpha1")
+
+    testCompileOnly("org.projectlombok:lombok:1.18.32")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.32")
 }
+
+tasks.test {
+    useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
+        showCauses = true
+        showExceptions = true
+    }
+}
+
 bukkit {
     name = "DeathChest"
     main = "com.github.devcyntrix.deathchest.DeathChestSpigotPlugin"

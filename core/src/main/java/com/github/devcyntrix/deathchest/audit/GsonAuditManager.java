@@ -8,6 +8,8 @@ import com.google.inject.Singleton;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -38,7 +40,8 @@ public class GsonAuditManager extends Thread implements AuditManager {
             while (!isInterrupted()) {
                 var item = items.take();
 
-                var audit = "audit-" + formatter.format(item.date().toInstant()) + ".csv";
+                var temporal = LocalDateTime.ofInstant(item.date().toInstant(), ZoneOffset.UTC);
+                var audit = "audit-" + formatter.format(temporal) + ".csv";
                 var file = new File(dataFolder, audit);
 
                 try (var writer = new FileWriter(file, true)) {

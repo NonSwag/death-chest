@@ -1,8 +1,7 @@
-package com.github.devcyntrix.deathchest;
-
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
+import com.github.devcyntrix.deathchest.DeathChestCorePlugin;
 import com.github.devcyntrix.deathchest.api.model.DeathChestConfig;
 import com.github.devcyntrix.deathchest.api.model.DeathChestModel;
 import com.github.devcyntrix.deathchest.api.model.HologramOptions;
@@ -12,6 +11,8 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.InvalidDescriptionException;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.junit.jupiter.api.*;
 
 import java.io.InputStream;
@@ -27,8 +28,9 @@ public class ChestHologramTest {
 
     private DeathChestModel model;
 
+    @SuppressWarnings({"DataFlowIssue", "unchecked"})
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws ClassNotFoundException, InvalidDescriptionException {
         InputStream stream = getClass().getClassLoader().getResourceAsStream("default-config.yml");
         if (stream == null)
             throw new IllegalStateException("Missing config");
@@ -40,7 +42,9 @@ public class ChestHologramTest {
         }
 
         ServerMock server = MockBukkit.getOrCreateMock();
-        this.plugin = MockBukkit.load(DeathChestCorePlugin.class, true, config);
+        var pdf = new PluginDescriptionFile(getClass().getClassLoader().getResourceAsStream("plugin.yml"));
+        var main = (Class<? extends DeathChestCorePlugin>) Class.forName(pdf.getMainClass());
+        this.plugin = MockBukkit.loadWith(main, pdf, config);
 
         PlayerMock player = server.addPlayer();
         List<ItemStack> content = new ArrayList<>(List.of(new ItemStack(Material.OAK_LOG)));

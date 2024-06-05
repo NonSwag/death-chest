@@ -13,6 +13,11 @@ public class DeathChestPaperPlugin extends DeathChestCorePlugin {
     private final ServiceSupportProvider serviceSupportProvider = new PaperServiceSupportProvider(this);
 
     @Override
+    public boolean isTest() {
+        return false;
+    }
+
+    @Override
     public Audience getAudience(CommandSender sender) {
         return sender;
     }
